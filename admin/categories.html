@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category & Inventory Center | Skate Lab Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/admin.css">
+
+  <style>
+    /* Module 8 Category & Inventory Styling */
+    .admin-tabs-nav {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 2px solid #282828;
+      margin-bottom: 1.5rem;
+    }
+    .admin-tab-btn {
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .admin-tab-btn.active {
+      color: #FFF;
+    }
+    .admin-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0; right: 0;
+      height: 2px;
+      background: #EE0039;
+    }
+
+    .dashboard-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .metric-card {
+      background: #141414;
+      border: 1px solid #282828;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .metric-title {
+      font-size: 0.75rem;
+      color: #A0A0A0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .metric-value.warning { color: #FFB300; }
+    .metric-value.danger { color: #FF5252; }
+
+    .control-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      background: #141414;
+      padding: 1rem;
+      border: 1px solid #282828;
+      border-radius: 8px;
+    }
+    .filter-group { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .filter-input, .filter-select {
+      background: #0A0A0A;
+      border: 1px solid #333;
+      color: #FFF;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.725rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-status.active { background: #064E3B; color: #6EE7B7; }
+    .badge-status.inactive { background: #374151; color: #D1D5DB; }
+    
+    /* Module 8 Rules: Stock 6+ (In Stock), Stock 1-5 (Low Stock), Stock 0 (Out of Stock) */
+    .badge-status.instock { background: #064E3B; color: #6EE7B7; }
+    .badge-status.lowstock { background: #78350F; color: #FDE68A; }
+    .badge-status.outofstock { background: #7F1D1D; color: #FCA5A5; }
+
+    .cat-thumb, .prod-thumb {
+      width: 44px; height: 44px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #222;
+      border: 1px solid #333;
+    }
+
+    .admin-modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease;
+      padding: 1rem;
+    }
+    .admin-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .admin-modal-box {
+      background: #141414;
+      border: 1px solid #282828;
+      border-radius: 8px;
+      width: 100%; max-width: 600px;
+      max-height: 90vh; overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    /* Toast Notification Element */
+    .admin-toast-container {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .admin-toast {
+      background: #1F2937;
+      color: #FFF;
+      border-left: 4px solid #EE0039;
+      padding: 0.75rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.25s ease;
+      pointer-events: auto;
+      max-width: 360px;
+    }
+    .admin-toast.show { opacity: 1; transform: translateY(0); }
+    .admin-toast.success { border-left-color: #00E676; }
+    .admin-toast.error { border-left-color: #FF5252; }
+    .admin-toast.warning { border-left-color: #FFB300; }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    <header class="admin-navbar">
+      <div class="admin-navbar-inner">
+        <a href="../index.html" class="brand-logo" target="_blank">
+          <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        </a>
+        <nav class="admin-nav-links">
+          <a href="dashboard.html" class="admin-nav-link">Dashboard</a>
+          <a href="products.html" class="admin-nav-link">Products</a>
+          <a href="categories.html" class="admin-nav-link active">Categories & Stock</a>
+          <a href="orders.html" class="admin-nav-link">Orders</a>
+          <button class="btn-logout" onclick="window.adminAuthGuard.logout()">SIGN OUT</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <div class="dashboard-card-title" style="margin-bottom: 1rem; border: none; padding: 0;">
+        <div>
+          <h1 class="dashboard-title">CATEGORY & INVENTORY CENTER</h1>
+          <p class="dashboard-subtitle">Manage store categories, control stock quantities, and view inventory alerts.</p>
+        </div>
+      </div>
+
+      <!-- Metrics Summary -->
+      <div class="dashboard-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">Total Categories</div>
+          <div class="metric-value" id="metric-total-cats">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Total Products</div>
+          <div class="metric-value" id="metric-total-prods">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Low Stock Items (1–5)</div>
+          <div class="metric-value warning" id="metric-low-stock">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Out of Stock Items (0)</div>
+          <div class="metric-value danger" id="metric-out-of-stock">0</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="admin-tabs-nav">
+        <button class="admin-tab-btn active" id="tab-btn-categories" onclick="switchTab('categories')">Category Management</button>
+        <button class="admin-tab-btn" id="tab-btn-inventory" onclick="switchTab('inventory')">Inventory & Stock Control</button>
+      </nav>
+
+      <!-- TAB 1: CATEGORY MANAGEMENT -->
+      <section id="tab-section-categories">
+        <div class="control-filter-bar">
+          <div class="filter-group">
+            <input type="text" id="search-cats" class="filter-input" placeholder="Search Categories..." style="width: 220px;" />
+            <select id="filter-cat-status" class="filter-select">
+              <option value="ALL">All Statuses</option>
+              <option value="ACTIVE">Active</option>
+              <option value="INACTIVE">Inactive</option>
+            </select>
+            <select id="sort-cats" class="filter-select">
+              <option value="order">Display Order</option>
+              <option value="alpha">Alphabetical</option>
+              <option value="newest">Newest First</option>
+            </select>
+          </div>
+          <button id="open-add-cat-btn" class="btn btn-primary btn-sm">+ CREATE CATEGORY</button>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Category Name</th>
+                  <th>Slug</th>
+                  <th>Products Count</th>
+                  <th>Display Order</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-categories-tbody">
+                <!-- Dynamically Injected Categories -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: INVENTORY MANAGEMENT -->
+      <section id="tab-section-inventory" style="display: none;">
+        <div class="control-filter-bar">
+          <div class="filter-group">
+            <input type="text" id="search-inventory" class="filter-input" placeholder="Search Product Title..." style="width: 220px;" />
+            
+            <select id="filter-stock-status" class="filter-select">
+              <option value="ALL">All Stock Statuses</option>
+              <option value="IN">In Stock (6+)</option>
+              <option value="LOW">Low Stock (1–5)</option>
+              <option value="OUT">Out of Stock (0)</option>
+            </select>
+
+            <select id="filter-inventory-category" class="filter-select">
+              <option value="ALL">All Categories</option>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <button id="open-bulk-stock-btn" class="btn btn-outline btn-sm">
+            ⚡ Bulk Stock Update
+          </button>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product Image</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Current Stock</th>
+                  <th>Status</th>
+                  <th>Last Updated</th>
+                  <th>Quick Edit</th>
+                </tr>
+              </thead>
+              <tbody id="admin-inventory-tbody">
+                <!-- Dynamically Injected Inventory -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CATEGORY CREATE/EDIT MODAL -->
+  <div id="cat-modal-overlay" class="admin-modal-overlay">
+    <div class="admin-modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem; border-bottom: 1px solid #282828; padding-bottom:0.75rem;">
+        <h3 id="modal-cat-title" style="color:#FFF; margin:0;">CREATE CATEGORY</h3>
+        <button onclick="closeCategoryModal()" style="background:none; border:none; color:#AAA; font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <form id="cat-form" class="admin-form">
+        <input type="hidden" id="cat-id" />
+
+        <div class="form-group">
+          <label for="cat-name" class="form-label">Category Name *</label>
+          <input type="text" id="cat-name" class="form-input" placeholder="e.g. Inline Wheels" required />
+        </div>
+
+        <div class="form-group">
+          <label for="cat-slug" class="form-label">Slug (Auto Generated) *</label>
+          <input type="text" id="cat-slug" class="form-input" placeholder="e.g. inline-wheels" required />
+        </div>
+
+        <div class="form-group">
+          <label for="cat-image-file" class="form-label">Category Image (Upload or Direct Image URL)</label>
+          <input type="file" id="cat-image-file" class="form-input" accept="image/*" style="margin-bottom:0.5rem;" />
+          <input type="url" id="cat-image-url" class="form-input" placeholder="https://..." />
+        </div>
+
+        <div class="form-group">
+          <label for="cat-desc" class="form-label">Short Description</label>
+          <textarea id="cat-desc" class="form-textarea" rows="2" placeholder="High performance inline skating wheels..."></textarea>
+        </div>
+
+        <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div>
+            <label for="cat-order" class="form-label">Display Order</label>
+            <input type="number" id="cat-order" class="form-input" value="1" min="0" />
+          </div>
+          <div>
+            <label for="cat-status" class="form-label">Status</label>
+            <select id="cat-status" class="form-select">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cat-seo-title" class="form-label">SEO Title (Optional)</label>
+          <input type="text" id="cat-seo-title" class="form-input" placeholder="Buy High Performance Inline Wheels Online" />
+        </div>
+
+        <div class="form-group">
+          <label for="cat-seo-desc" class="form-label">SEO Meta Description (Optional)</label>
+          <textarea id="cat-seo-desc" class="form-textarea" rows="2" placeholder="Explore top rated speed and freeskate wheels in India..."></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
+          <button type="button" class="btn btn-outline" onclick="closeCategoryModal()">Cancel</button>
+          <button type="submit" id="cat-submit-btn" class="btn btn-primary">SAVE CATEGORY</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BULK STOCK UPDATE MODAL -->
+  <div id="bulk-stock-modal-overlay" class="admin-modal-overlay">
+    <div class="admin-modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem; border-bottom: 1px solid #282828; padding-bottom:0.75rem;">
+        <h3 style="color:#FFF; margin:0;">BULK STOCK UPDATE</h3>
+        <button onclick="closeBulkStockModal()" style="background:none; border:none; color:#AAA; font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <form id="bulk-stock-form" class="admin-form">
+        <p style="color:#AAA; font-size:0.85rem; margin-bottom:1rem;">
+          Select products to update stock quantities across your inventory.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">1. Adjustment Mode</label>
+          <select id="bulk-mode" class="form-select">
+            <option value="set">Set Stock To Exact Value</option>
+            <option value="add">Add Units to Stock (+)</option>
+            <option value="subtract">Subtract Units from Stock (-)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="bulk-amount" class="form-label">2. Quantity Amount</label>
+          <input type="number" id="bulk-amount" class="form-input" min="0" value="10" required />
+        </div>
+
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+            <label class="form-label" style="margin:0;">3. Target Products (<span id="bulk-selected-count">0</span> Selected)</label>
+            <button type="button" class="btn btn-outline btn-sm" style="padding: 0.15rem 0.5rem; font-size:0.75rem;" onclick="toggleSelectAllBulk()">Select All / None</button>
+          </div>
+          <div id="bulk-products-list" style="max-height: 220px; overflow-y: auto; background:#0A0A0A; border:1px solid #333; padding:0.5rem; border-radius:4px;">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
+          <button type="button" class="btn btn-outline" onclick="closeBulkStockModal()">Cancel</button>
+          <button type="submit" id="bulk-submit-btn" class="btn btn-primary">APPLY BULK UPDATE</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="admin-toast-container"></div>
+
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/admin/admin-auth.js"></script>
+  <script src="../assets/js/admin/categories.js"></script>
+</body>
+</html>

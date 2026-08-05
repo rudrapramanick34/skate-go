@@ -1,0 +1,439 @@
+/* ==========================================================================
+   SKATE LAB - GLOBAL SEARCH PAGE STYLES (Mobile-First)
+   File: assets/css/pages/search.css
+   ========================================================================== */
+
+.search-page-main {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.search-hero-section {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+}
+
+.search-page-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin-bottom: 1.25rem;
+}
+
+/* Search Bar Wrapper */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.25rem;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.search-hero-input {
+  width: 100%;
+  min-height: 56px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 28px;
+  padding: 0.75rem 3.5rem 0.75rem 3.5rem;
+  font-size: 1rem;
+  color: var(--color-text-main);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-hero-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(238, 0, 57, 0.2);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.clear-search-btn:hover {
+  color: var(--color-text-main);
+  background-color: var(--color-card-border);
+}
+
+/* Popular Tag Pills */
+.quick-tags-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-tags-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.tag-pill {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.tag-pill:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: rgba(238, 0, 57, 0.08);
+}
+
+/* Search Controls Bar */
+.search-controls-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+@media (min-width: 576px) {
+  .search-controls-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.results-count-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.results-count-text strong {
+  color: var(--color-text-main);
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.filter-count-badge {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+}
+
+.sort-select {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  color: var(--color-text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Active Filter Chips */
+.active-chips-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.chip {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-primary);
+  color: var(--color-text-main);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.chip-remove {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Sidebar Drawer (Mobile First) */
+.filter-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 320px;
+  height: 100vh;
+  background-color: var(--color-background);
+  border-right: 1px solid var(--color-card-border);
+  z-index: 1002;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-sidebar.active {
+  transform: translateX(0);
+}
+
+.filter-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.filter-sidebar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin: 0;
+}
+
+.close-filter-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.filter-group-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.filter-checkbox-label input[type="checkbox"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+}
+
+.price-inputs-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-input {
+  width: 100%;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  color: var(--color-text-main);
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.price-sep {
+  color: var(--color-text-secondary);
+}
+
+/* Desktop Grid Layout */
+.search-layout {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .search-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .filter-sidebar {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    padding: 0;
+    border-right: none;
+    z-index: auto;
+  }
+
+  .filter-sidebar-header,
+  .close-filter-btn,
+  .filter-toggle-btn {
+    display: none;
+  }
+}
+
+/* Search Grid Cards */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .search-results-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Product Card */
+.search-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.search-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+}
+
+.search-card-img-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  background-color: #0b0b0b;
+  overflow: hidden;
+}
+
+.search-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.search-card:hover .search-card-img {
+  transform: scale(1.05);
+}
+
+.search-card-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.search-card-cat {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.search-card-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.search-card-price {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text-main);
+  margin-bottom: 0.75rem;
+}
+
+/* Empty State */
+.no-results-state {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+}
+
+.no-results-icon {
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.no-results-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+}
+
+.no-results-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}

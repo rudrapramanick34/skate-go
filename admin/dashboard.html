@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard & Control Center | Skate Lab</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/admin.css">
+
+  <!-- Chart.js for BI Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Module 10 Extended Admin Sub-Nav & Layout Controls */
+    .admin-sub-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--color-border, #2a2a2a);
+      padding-bottom: 0.75rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .sub-nav-btn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--color-text-secondary, #a0a0a0);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.5rem 0.9rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    .sub-nav-btn.active, .sub-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--color-primary, #e63946);
+      border-color: rgba(230, 57, 70, 0.3);
+    }
+    .kpi-grid-10 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .kpi-card-mini {
+      background: var(--color-bg-card, #121212);
+      border: 1px solid var(--color-border, #2a2a2a);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .kpi-card-mini .kpi-label {
+      font-size: 0.7rem;
+      color: var(--color-text-secondary, #888);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .kpi-card-mini .kpi-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      color: var(--color-text-main, #ffffff);
+    }
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .chart-card {
+      background: var(--color-bg-card, #121212);
+      border: 1px solid var(--color-border, #2a2a2a);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .chart-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .export-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: var(--color-bg-card, #121212);
+      padding: 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--color-border, #2a2a2a);
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .settings-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .form-section {
+      background: var(--color-bg-card, #121212);
+      border: 1px solid var(--color-border, #2a2a2a);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .form-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: var(--color-primary, #e63946);
+      border-bottom: 1px solid var(--color-border, #2a2a2a);
+      padding-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--color-text-secondary, #aaa);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid var(--color-border, #333);
+      color: #fff;
+      padding: 0.6rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-primary, #e63946);
+    }
+    .toggle-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .toggle-group label {
+      font-size: 0.85rem;
+      margin-bottom: 0;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 22px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #333; transition: .3s; border-radius: 22px;
+    }
+    .slider:before {
+      position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+      background-color: white; transition: .3s; border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--color-primary, #e63946); }
+    input:checked + .slider:before { transform: translateX(22px); }
+    .health-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .health-card {
+      background: var(--color-bg-card, #121212);
+      border: 1px solid var(--color-border, #2a2a2a);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    
+    <!-- Admin Header Navbar -->
+    <header class="admin-navbar">
+      <div class="admin-navbar-inner">
+        <a href="../index.html" class="brand-logo" target="_blank">
+          <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        </a>
+
+        <nav class="admin-nav-links">
+          <a href="dashboard.html" class="admin-nav-link active">Control Center & BI</a>
+          <a href="products.html" class="admin-nav-link">Products</a>
+          <a href="orders.html" class="admin-nav-link">Orders</a>
+          <a href="categories.html" class="admin-nav-link">Categories</a>
+          <button class="btn-logout" onclick="window.adminAuthGuard.logout()">SIGN OUT</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Dashboard Main Content -->
+    <main class="admin-content">
+      
+      <header class="dashboard-header" style="margin-bottom: 1.5rem;">
+        <div>
+          <h1 class="dashboard-title">MODULE 10: STORE SETTINGS & CONTROL CENTER</h1>
+          <p class="dashboard-subtitle">Full administrative control over store settings, payment gateways, shipping rules, policies, SEO, maintenance, & business intelligence.</p>
+        </div>
+      </header>
+
+      <!-- Sub Navigation Tabs -->
+      <nav class="admin-sub-nav">
+        <button class="sub-nav-btn active" onclick="switchTab('analytics-tab', this)">1. BUSINESS ANALYTICS</button>
+        <button class="sub-nav-btn" onclick="switchTab('product-analytics-tab', this)">2. PRODUCT & CUSTOMER BI</button>
+        <button class="sub-nav-btn" onclick="switchTab('store-info-tab', this)">3. STORE INFO & SEO</button>
+        <button class="sub-nav-btn" onclick="switchTab('payment-shipping-tab', this)">4. PAYMENT & SHIPPING</button>
+        <button class="sub-nav-btn" onclick="switchTab('policies-tab', this)">5. STORE POLICIES</button>
+        <button class="sub-nav-btn" onclick="switchTab('homepage-tab', this)">6. HOMEPAGE SETTINGS</button>
+        <button class="sub-nav-btn" onclick="switchTab('maintenance-tab', this)">7. MAINTENANCE & TOGGLES</button>
+        <button class="sub-nav-btn" onclick="switchTab('backup-tab', this)">8. BACKUP CENTER</button>
+        <button class="sub-nav-btn" onclick="switchTab('health-tab', this)">9. SITE HEALTH PANEL</button>
+      </nav>
+
+      <!-- =================================================================== -->
+      <!-- TAB 1: BUSINESS ANALYTICS                                          -->
+      <!-- =================================================================== -->
+      <div id="analytics-tab" class="tab-content active">
+        <section class="kpi-grid-10">
+          <div class="kpi-card-mini">
+            <span class="kpi-label">TODAY'S ORDERS</span>
+            <div id="kpi-today-orders" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">TODAY'S REVENUE</span>
+            <div id="kpi-today-revenue" class="kpi-value">₹0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">MONTHLY REVENUE</span>
+            <div id="kpi-monthly-revenue" class="kpi-value">₹0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">LIFETIME REVENUE</span>
+            <div id="kpi-lifetime-revenue" class="kpi-value">₹0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">PENDING ORDERS</span>
+            <div id="kpi-pending-orders" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">DELIVERED ORDERS</span>
+            <div id="kpi-delivered-orders" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">CANCELLED ORDERS</span>
+            <div id="kpi-cancelled-orders" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">LOW STOCK PRODUCTS</span>
+            <div id="kpi-low-stock" class="kpi-value" style="color: #f39c12;">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">OUT OF STOCK</span>
+            <div id="kpi-out-stock" class="kpi-value" style="color: #e74c3c;">0</div>
+          </div>
+        </section>
+
+        <section class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-title"><span>Sales & Revenue Velocity</span></div>
+            <canvas id="chart-sales" height="200"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-title"><span>Order Volume Trend</span></div>
+            <canvas id="chart-orders" height="200"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 2: PRODUCT & CUSTOMER ANALYTICS                                -->
+      <!-- =================================================================== -->
+      <div id="product-analytics-tab" class="tab-content">
+        <section class="kpi-grid-10" style="margin-bottom: 1.5rem;">
+          <div class="kpi-card-mini">
+            <span class="kpi-label">TOTAL CUSTOMERS</span>
+            <div id="cust-total" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">NEW CUSTOMERS</span>
+            <div id="cust-new" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">RETURNING CUSTOMERS</span>
+            <div id="cust-returning" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card-mini">
+            <span class="kpi-label">ORDERS PER CUSTOMER</span>
+            <div id="cust-opc" class="kpi-value">0.0</div>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="dashboard-card">
+            <div class="dashboard-card-title"><span>TOP SELLING & LOWEST STOCK PRODUCTS</span></div>
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Views</th><th>Orders</th></tr></thead>
+                <tbody id="table-product-analytics"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="dashboard-card">
+            <div class="dashboard-card-title"><span>MOST SEARCHED QUERIES</span></div>
+            <div id="list-search-analytics" class="search-analytics-list"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 3: STORE INFO & SEO                                            -->
+      <!-- =================================================================== -->
+      <div id="store-info-tab" class="tab-content">
+        <form id="form-store-info" onsubmit="saveStoreInfo(event)">
+          <div class="settings-form-grid">
+            
+            <div class="form-section">
+              <h3 class="form-section-title">SECTION 1: STORE INFORMATION</h3>
+              <div class="form-group">
+                <label>Store Name</label>
+                <input type="text" id="setting-store-name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Business Description</label>
+                <textarea id="setting-store-description" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Store Address</label>
+                <textarea id="setting-business-address" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Support WhatsApp Number</label>
+                <input type="text" id="setting-whatsapp-number" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Support Email</label>
+                <input type="email" id="setting-support-email" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">LOGOS & SOCIAL LINKS</h3>
+              <div class="form-group">
+                <label>Store Logo URL</label>
+                <input type="text" id="setting-store-logo" class="form-control">
+                <input type="file" accept="image/*" style="margin-top:0.4rem; font-size:0.75rem;" onchange="uploadAsset(this, 'setting-store-logo')">
+              </div>
+              <div class="form-group">
+                <label>Favicon URL</label>
+                <input type="text" id="setting-favicon" class="form-control">
+                <input type="file" accept="image/*" style="margin-top:0.4rem; font-size:0.75rem;" onchange="uploadAsset(this, 'setting-favicon')">
+              </div>
+              <div class="form-group">
+                <label>Instagram URL</label>
+                <input type="url" id="setting-instagram-url" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Facebook URL</label>
+                <input type="url" id="setting-facebook-url" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>YouTube URL</label>
+                <input type="url" id="setting-youtube-url" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Website URL</label>
+                <input type="url" id="setting-website-url" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-section" style="grid-column: 1 / -1;">
+              <h3 class="form-section-title">SECTION 6: SEO SETTINGS</h3>
+              <div class="settings-form-grid">
+                <div class="form-group">
+                  <label>Website Title</label>
+                  <input type="text" id="setting-seo-title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Meta Keywords</label>
+                  <input type="text" id="setting-meta-keywords" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Meta Description</label>
+                <textarea id="setting-seo-description" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="settings-form-grid">
+                <div class="form-group">
+                  <label>Open Graph Image URL</label>
+                  <input type="text" id="setting-og-image" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Twitter Card Image URL</label>
+                  <input type="text" id="setting-twitter-card" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Google Site Verification Code</label>
+                  <input type="text" id="setting-google-verification" class="form-control">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">SAVE STORE & SEO SETTINGS</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 4: PAYMENT & SHIPPING                                          -->
+      <!-- =================================================================== -->
+      <div id="payment-shipping-tab" class="tab-content">
+        <form id="form-payment-shipping" onsubmit="savePaymentShipping(event)">
+          <div class="settings-form-grid">
+            
+            <div class="form-section">
+              <h3 class="form-section-title">SECTION 2: PAYMENT SETTINGS</h3>
+              <div class="form-group">
+                <label>UPI ID (VPA)</label>
+                <input type="text" id="setting-upi-id" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>UPI QR Image URL</label>
+                <input type="text" id="setting-upi-qr" class="form-control">
+                <input type="file" accept="image/*" style="margin-top:0.4rem; font-size:0.75rem;" onchange="uploadAsset(this, 'setting-upi-qr')">
+              </div>
+              <div class="form-group">
+                <label>Advance Payment % (Default 60%)</label>
+                <input type="number" step="1" min="0" max="100" id="setting-min-advance-pct" class="form-control" required>
+              </div>
+              <div class="toggle-group">
+                <div>
+                  <strong>Allow Cash On Delivery (COD)</strong>
+                  <div style="font-size:0.72rem; color:var(--color-text-secondary);">Enable or disable COD option at checkout.</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggle-allow-cod">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">SECTION 3: SHIPPING SETTINGS</h3>
+              <div class="form-group">
+                <label>Free Shipping Threshold (₹)</label>
+                <input type="number" step="0.01" id="setting-free-shipping-amount" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Flat Shipping Charge (₹)</label>
+                <input type="number" step="0.01" id="setting-flat-shipping-charge" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Estimated Delivery Days</label>
+                <input type="text" id="setting-delivery-days" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Default Courier Partner</label>
+                <input type="text" id="setting-default-courier" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">SAVE PAYMENT & SHIPPING RULES</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 5: STORE POLICIES                                              -->
+      <!-- =================================================================== -->
+      <div id="policies-tab" class="tab-content">
+        <form id="form-store-policies" onsubmit="saveStorePolicies(event)">
+          <div class="settings-form-grid">
+            <div class="form-section">
+              <h3 class="form-section-title">Privacy Policy</h3>
+              <textarea id="policy-privacy" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-section">
+              <h3 class="form-section-title">Refund & Return Policy</h3>
+              <textarea id="policy-refund" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-section">
+              <h3 class="form-section-title">Shipping Policy</h3>
+              <textarea id="policy-shipping" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-section">
+              <h3 class="form-section-title">Terms & Conditions</h3>
+              <textarea id="policy-terms" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-section">
+              <h3 class="form-section-title">About Us</h3>
+              <textarea id="policy-about" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-section">
+              <h3 class="form-section-title">Support Info Page</h3>
+              <textarea id="policy-support" class="form-control" rows="6"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">SAVE ALL LEGAL POLICIES</button>
+        </form>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 6: HOMEPAGE SETTINGS                                           -->
+      <!-- =================================================================== -->
+      <div id="homepage-tab" class="tab-content">
+        <form id="form-homepage-settings" onsubmit="saveHomepageSettings(event)">
+          <div class="settings-form-grid">
+            <div class="form-section">
+              <h3 class="form-section-title">Announcement Bar</h3>
+              <div class="toggle-group" style="margin-bottom: 1rem;">
+                <strong>Enable Announcement Bar</strong>
+                <label class="switch">
+                  <input type="checkbox" id="toggle-announcement">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="form-group">
+                <label>Announcement Text</label>
+                <input type="text" id="setting-announcement-text" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">Hero Banner Configuration</h3>
+              <div class="form-group">
+                <label>Hero Title</label>
+                <input type="text" id="setting-hero-title" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Hero Subtitle</label>
+                <input type="text" id="setting-hero-subtitle" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Hero Image URL</label>
+                <input type="text" id="setting-hero-image" class="form-control">
+                <input type="file" accept="image/*" style="margin-top:0.4rem; font-size:0.75rem;" onchange="uploadAsset(this, 'setting-hero-image')">
+              </div>
+              <div class="settings-form-grid">
+                <div class="form-group">
+                  <label>CTA Button Text</label>
+                  <input type="text" id="setting-hero-cta-text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>CTA Button Link</label>
+                  <input type="text" id="setting-hero-cta-link" class="form-control">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">SAVE HOMEPAGE CONFIGURATION</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 7: MAINTENANCE MODE & TOGGLES                                  -->
+      <!-- =================================================================== -->
+      <div id="maintenance-tab" class="tab-content">
+        <div class="form-section" style="max-width: 600px; margin: 0 auto;">
+          <h3 class="form-section-title">SECTION 7: STORE MAINTENANCE MODE</h3>
+          
+          <div class="toggle-group" style="padding: 1rem 0;">
+            <div>
+              <strong style="font-size: 1.1rem; color: #fff;">MAINTENANCE MODE STATUS</strong>
+              <div style="font-size:0.78rem; color:var(--color-text-secondary); margin-top:0.25rem;">
+                When ON, storefront visitors will see a professional Maintenance Page. Authenticated admins retain full panel access.
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-maintenance-mode" onchange="toggleMaintenanceMode()">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 8: BACKUP & DATA EXPORT CENTER                                 -->
+      <!-- =================================================================== -->
+      <div id="backup-tab" class="tab-content">
+        <div class="settings-form-grid">
+          
+          <div class="form-section">
+            <h3 class="form-section-title">STORE SETTINGS BACKUP</h3>
+            <p style="font-size:0.8rem; color:var(--color-text-secondary); margin-bottom:1rem;">Export or import all store configurations, payment choices, and policies in JSON format.</p>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="exportStoreSettingsJSON()">EXPORT STORE SETTINGS JSON</button>
+              <label class="btn btn-secondary" style="cursor:pointer; margin:0;">
+                IMPORT STORE SETTINGS JSON
+                <input type="file" accept=".json" style="display:none;" onchange="importStoreSettingsJSON(this)">
+              </label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 class="form-section-title">DATABASE TELEMETRY EXPORT</h3>
+            <p style="font-size:0.8rem; color:var(--color-text-secondary); margin-bottom:1rem;">Download real-time database tables directly to production CSV files.</p>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button class="btn btn-secondary" onclick="exportOrdersCSV()">Export Orders CSV</button>
+              <button class="btn btn-secondary" onclick="exportProductsCSV()">Export Products CSV</button>
+              <button class="btn btn-secondary" onclick="exportAnalyticsCSV()">Export Analytics CSV</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 9: SITE HEALTH PANEL                                           -->
+      <!-- =================================================================== -->
+      <div id="health-tab" class="tab-content">
+        <header style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <h3 class="form-section-title" style="border:none; margin:0;">SECTION 12: SYSTEM & INFRASTRUCTURE HEALTH</h3>
+          <button class="btn btn-secondary" style="font-size:0.75rem;" onclick="runSystemDiagnostics()">RE-RUN TELEMETRY</button>
+        </header>
+
+        <div class="health-grid">
+          <div class="health-card">
+            <span>Supabase Connection</span>
+            <span id="sh-supabase" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Storage Bucket</span>
+            <span id="sh-storage" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Realtime Channel</span>
+            <span id="sh-realtime" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Admin Authentication</span>
+            <span id="sh-auth" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>WhatsApp Configured</span>
+            <span id="sh-whatsapp" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>UPI Configured</span>
+            <span id="sh-upi" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Store Logo Available</span>
+            <span id="sh-logo" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Hero Banner Available</span>
+            <span id="sh-hero" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Policies Configured</span>
+            <span id="sh-policies" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Active Products</span>
+            <span id="sh-products" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Categories Indexed</span>
+            <span id="sh-categories" class="health-badge">🔴 Error</span>
+          </div>
+          <div class="health-card">
+            <span>Last Sync Time</span>
+            <span id="sh-sync" style="font-size:0.75rem; color:#aaa;">Just now</span>
+          </div>
+          <div class="health-card" style="grid-column: 1 / -1;">
+            <span>Last Store Backup</span>
+            <span id="sh-backup" style="font-size:0.75rem; color:#aaa;">Not recorded</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- JS Dependencies -->
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/admin/admin-auth.js"></script>
+  <script src="../assets/js/admin/dashboard.js"></script>
+</body>
+</html>

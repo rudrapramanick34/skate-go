@@ -1,0 +1,344 @@
+/* ==========================================================================
+   SKATE LAB - CHECKOUT PAGE STYLES (Mobile-First)
+   File: assets/css/pages/checkout.css
+   ========================================================================== */
+
+.checkout-secure-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #00E676;
+  background-color: rgba(0, 230, 118, 0.08);
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+}
+
+.checkout-page-main {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.checkout-header {
+  margin-bottom: 2rem;
+}
+
+.checkout-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin-bottom: 0.25rem;
+}
+
+.checkout-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.checkout-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Form Styling */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.form-block {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.form-block-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.form-label .required {
+  color: var(--color-primary);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  min-height: 48px;
+  background-color: #0b0b0b;
+  border: 1px solid var(--color-card-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(238, 0, 57, 0.2);
+}
+
+.form-input.has-error,
+.form-textarea.has-error,
+.form-select.has-error {
+  border-color: #ff4d4d;
+}
+
+.form-error-msg {
+  font-size: 0.75rem;
+  color: #ff4d4d;
+  display: none;
+}
+
+.form-error-msg.visible {
+  display: block;
+}
+
+/* Phone Input Prefix */
+.input-prefix-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.form-input.prefixed {
+  padding-left: 3.2rem;
+}
+
+/* Dual Column Layout */
+.form-row.dual-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 576px) {
+  .form-row.dual-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Payment Policy Box */
+.payment-policy-card {
+  background-color: #0d0d0d;
+  border: 1px solid var(--color-card-border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.policy-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.policy-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.policy-list {
+  padding-left: 1.2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.policy-list li {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* WhatsApp Button */
+.btn-whatsapp-primary {
+  background-color: #25D366;
+  color: #000000;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  min-height: 52px;
+}
+
+.btn-whatsapp-primary:hover {
+  background-color: #20ba5a;
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp-primary:active {
+  transform: translateY(0);
+}
+
+/* Checkout Summary Sidebar */
+.checkout-summary-aside {
+  height: fit-content;
+}
+
+.summary-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.summary-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.checkout-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 1.25rem;
+  padding-right: 0.25rem;
+}
+
+.checkout-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkout-item-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  background-color: #0b0b0b;
+  border: 1px solid var(--color-card-border);
+  flex-shrink: 0;
+}
+
+.checkout-item-info {
+  flex: 1;
+}
+
+.checkout-item-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin: 0 0 0.2rem 0;
+  line-height: 1.2;
+}
+
+.checkout-item-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.checkout-item-price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+/* Breakdown Rows */
+.checkout-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-card-border);
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.breakdown-row.total-row {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--color-card-border);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.breakdown-row .total-price {
+  color: var(--color-primary);
+  font-size: 1.3rem;
+}
+
+/* Desktop Grid (min-width: 992px) */
+@media (min-width: 992px) {
+  .checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+}

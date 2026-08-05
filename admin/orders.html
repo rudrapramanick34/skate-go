@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Processing & Fulfillment Center | Skate Lab Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/admin.css">
+
+  <style>
+    .dashboard-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .metric-card {
+      background: #141414;
+      border: 1px solid #282828;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .metric-title {
+      font-size: 0.75rem;
+      color: #A0A0A0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .metric-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .metric-value.highlight { color: #00E676; }
+    .metric-value.warning { color: #FFB300; }
+
+    .orders-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      background: #141414;
+      padding: 1rem;
+      border: 1px solid #282828;
+      border-radius: 8px;
+    }
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .filter-input, .filter-select {
+      background: #0A0A0A;
+      border: 1px solid #333;
+      color: #FFF;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .filter-input:focus, .filter-select:focus {
+      border-color: #00E676;
+      outline: none;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .status-badge.pending { background: #78350F; color: #FDE68A; }
+    .status-badge.new { background: #1E3A8A; color: #93C5FD; }
+    .status-badge.confirmed { background: #065F46; color: #A7F3D0; }
+    .status-badge.packed { background: #3730A3; color: #C7D2FE; }
+    .status-badge.shipped { background: #1E40AF; color: #BFDBFE; }
+    .status-badge.delivered { background: #064E3B; color: #6EE7B7; }
+    .status-badge.cancelled { background: #7F1D1D; color: #FCA5A5; }
+
+    .pay-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .pay-badge.pending { background: #78350F; color: #FDE68A; }
+    .pay-badge.advance { background: #1E40AF; color: #93C5FD; }
+    .pay-badge.paid { background: #064E3B; color: #6EE7B7; }
+    .pay-badge.refunded { background: #7F1D1D; color: #FCA5A5; }
+
+    .admin-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      padding: 1rem;
+    }
+    .admin-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .admin-modal {
+      background: #141414;
+      border: 1px solid #282828;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #282828;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 700; color: #FFF; }
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: #AAA;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .btn-close-modal:hover { color: #FFF; }
+
+    .modal-section { margin-bottom: 1.25rem; }
+    .modal-section-title { font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+    .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .detail-item span { display: block; font-size: 0.75rem; color: #888; }
+    .detail-item strong { font-size: 0.95rem; color: #FFF; }
+
+    .table-action-group { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
+    .select-sm { background: #0A0A0A; border: 1px solid #333; color: #FFF; font-size: 0.75rem; padding: 0.25rem 0.4rem; border-radius: 4px; }
+
+    .timeline-list { list-style: none; padding: 0; margin: 0; border-left: 2px solid #333; margin-left: 0.5rem; }
+    .timeline-item { position: relative; padding-left: 1rem; padding-bottom: 0.75rem; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 3px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #00E676;
+    }
+    .timeline-time { font-size: 0.75rem; color: #888; }
+    .timeline-status { font-size: 0.85rem; color: #FFF; font-weight: 600; }
+
+    @media print {
+      body * { visibility: hidden; }
+      #printable-document, #printable-document * { visibility: visible; }
+      #printable-document {
+        position: absolute;
+        left: 0; top: 0;
+        width: 100%;
+        background: #FFF !important;
+        color: #000 !important;
+        padding: 20px;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    <header class="admin-navbar no-print">
+      <div class="admin-navbar-inner">
+        <a href="../index.html" class="brand-logo" target="_blank">
+          <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        </a>
+        <nav class="admin-nav-links">
+          <a href="dashboard.html" class="admin-nav-link">Dashboard</a>
+          <a href="products.html" class="admin-nav-link">Products</a>
+          <a href="categories.html" class="admin-nav-link">Categories</a>
+          <a href="orders.html" class="admin-nav-link active">
+            Orders <span id="unread-order-badge" style="display:none; background:#00E676; color:#000; font-size:0.7rem; padding:0.1rem 0.4rem; border-radius:10px; margin-left:0.2rem; font-weight:bold;">0</span>
+          </a>
+          <button class="btn-logout" onclick="window.adminAuthGuard.logout()">SIGN OUT</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="admin-content no-print">
+      <div class="dashboard-card-title" style="margin-bottom: 1.5rem; border: none; padding: 0;">
+        <div>
+          <h1 class="dashboard-title">ORDER PROCESSING & FULFILLMENT</h1>
+          <p class="dashboard-subtitle">Manage customer orders, track payments, generate Shiprocket labels & packing slips.</p>
+        </div>
+      </div>
+
+      <!-- Metrics Panel -->
+      <div class="dashboard-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">Today's Orders</div>
+          <div class="metric-value" id="metric-todays-orders">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Total Orders</div>
+          <div class="metric-value" id="metric-total-orders">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Pending Orders</div>
+          <div class="metric-value warning" id="metric-pending-orders">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Delivered Orders</div>
+          <div class="metric-value highlight" id="metric-delivered-orders">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Revenue (Paid)</div>
+          <div class="metric-value highlight" id="metric-revenue">₹0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Pending Payments</div>
+          <div class="metric-value warning" id="metric-pending-payments">₹0</div>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Export Actions -->
+      <div class="orders-filter-bar">
+        <div class="filter-group">
+          <input type="text" id="order-search" class="filter-input" placeholder="Search Order ID, Name, Phone..." style="width: 240px;" />
+          
+          <select id="filter-order-status" class="filter-select">
+            <option value="ALL">All Order Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Packed">Packed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+
+          <select id="filter-payment-status" class="filter-select">
+            <option value="ALL">All Payment Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="60% Advance Paid">60% Advance Paid</option>
+            <option value="Fully Paid">Fully Paid</option>
+            <option value="Refunded">Refunded</option>
+          </select>
+
+          <select id="sort-orders" class="filter-select">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="highest">Highest Amount</option>
+            <option value="lowest">Lowest Amount</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <button class="btn btn-outline btn-sm" onclick="exportOrdersCSV()" title="Export Filtered CSV">
+            📊 Export CSV
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="exportTodayOrdersCSV()" title="Export Today's Orders">
+            📅 Today's CSV
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="loadOrders()">
+            🔄 Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <section class="dashboard-card">
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Order Status</th>
+                <th>Date & Time</th>
+                <th>Quick Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-tbody">
+              <!-- Dynamically Injected Orders -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ORDER DETAILS MODAL -->
+  <div id="order-modal-overlay" class="admin-modal-overlay no-print">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-order-number">ORDER DETAILS</h3>
+        <button class="btn-close-modal" onclick="closeOrderModal()">&times;</button>
+      </div>
+      <div id="modal-order-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINTABLE CONTAINER -->
+  <div id="printable-document" style="display:none;">
+    <!-- Rendered dynamically for Shipping Labels or Packing Slips -->
+  </div>
+
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/admin/admin-auth.js"></script>
+  <script src="../assets/js/admin/orders.js"></script>
+</body>
+</html>

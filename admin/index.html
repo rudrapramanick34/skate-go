@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Authentication | Skate Lab</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/admin.css">
+</head>
+<body class="admin-login-body">
+
+  <main class="admin-login-container">
+    <div class="admin-login-card">
+      
+      <div class="admin-brand-header">
+        <a href="../index.html" class="brand-logo">
+          <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        </a>
+        <span class="admin-badge">CONTROL PANEL</span>
+      </div>
+
+      <h1 class="admin-login-title">ADMINISTRATOR SIGN IN</h1>
+      <p class="admin-login-subtitle">Enter your Supabase credentials to manage inventory, process WhatsApp orders, and inspect store analytics.</p>
+
+      <div id="login-error-alert" class="admin-alert alert-danger" style="display: none;">
+        <!-- Injected Error Message -->
+      </div>
+
+      <form id="admin-login-form" class="admin-form" novalidate>
+        <div class="form-group">
+          <label for="admin-email" class="form-label">Admin Email</label>
+          <input type="email" id="admin-email" name="email" class="form-input" placeholder="admin@skatelab.in" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="admin-password" class="form-label">Password</label>
+          <input type="password" id="admin-password" name="password" class="form-input" placeholder="••••••••••••" required autocomplete="current-password" />
+        </div>
+
+        <button type="submit" id="login-btn" class="btn btn-primary btn-full btn-lg">
+          SIGN IN TO DASHBOARD
+        </button>
+      </form>
+
+      <div class="admin-login-footer">
+        <a href="../index.html" class="back-to-store-link">&larr; Return to Storefront</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- JS Dependencies -->
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/admin/admin-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('admin-login-form');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('admin-email').value.trim();
+        const password = document.getElementById('admin-password').value;
+        const alertEl = document.getElementById('login-error-alert');
+        const btn = document.getElementById('login-btn');
+
+        alertEl.style.display = 'none';
+
+        if (!email || !password) {
+          alertEl.textContent = 'Please provide both email and password.';
+          alertEl.style.display = 'block';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'AUTHENTICATING...';
+
+        const { success, error } = await window.adminAuthGuard.login(email, password);
+
+        if (success) {
+          window.location.href = 'dashboard.html';
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'SIGN IN TO DASHBOARD';
+          alertEl.textContent = error || 'Invalid email or password credentials.';
+          alertEl.style.display = 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

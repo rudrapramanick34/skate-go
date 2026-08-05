@@ -1,0 +1,214 @@
+/* ==========================================================================
+   SKATE LAB - CART PAGE STYLES (Mobile-First)
+   File: assets/css/pages/cart.css
+   ========================================================================== */
+
+.cart-page-main {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.cart-page-header {
+  margin-bottom: 2rem;
+}
+
+.cart-page-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin-bottom: 0.25rem;
+}
+
+.cart-page-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.cart-page-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Shipping Banner */
+.cart-page-banner {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Cart Items List & Cards */
+.cart-page-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-page-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+@media (min-width: 576px) {
+  .cart-page-card {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.cart-page-card-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: #0b0b0b;
+  border: 1px solid var(--color-card-border);
+  flex-shrink: 0;
+}
+
+.cart-page-card-info {
+  flex: 1;
+}
+
+.cart-page-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.4rem;
+}
+
+.cart-page-card-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cart-page-card-weight {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.cart-page-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+/* Actions Bar */
+.cart-page-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-card-border);
+}
+
+.btn-text-danger {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.btn-text-danger:hover {
+  opacity: 0.8;
+}
+
+/* Summary Card */
+.cart-summary-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: fit-content;
+}
+
+.summary-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-main);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.summary-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.summary-detail-item.highlight-row {
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--color-card-border);
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.summary-total-price {
+  font-size: 1.4rem;
+  color: var(--color-primary);
+}
+
+/* Policy Notice Box */
+.policy-notice-box {
+  background-color: #0b0b0b;
+  border: 1px solid var(--color-card-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.policy-notice-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.policy-notice-item svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Desktop Responsive Grid (min-width: 992px) */
+@media (min-width: 992px) {
+  .cart-page-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+    gap: 2.5rem;
+  }
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express Checkout | Skate Lab India</title>
+  <meta name="description" content="Complete your high-performance inline skating gear order via official WhatsApp UPI verification. Fast shipping across India.">
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/header-footer.css">
+  <link rel="stylesheet" href="assets/css/pages/checkout.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="brand-logo" aria-label="Skate Lab Home">
+        <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+      </a>
+      <div class="checkout-secure-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>Secure Direct Order Flow</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="checkout-page-main container">
+    <header class="checkout-header">
+      <h1 class="checkout-title">DISPATCH & PAYMENT DETAILS</h1>
+      <p class="checkout-subtitle">Fill in your Indian delivery address. Order confirmed via WhatsApp with official UPI QR.</p>
+    </header>
+
+    <div class="checkout-layout">
+      <!-- Left Column: Address Form -->
+      <section class="checkout-form-section">
+        <form id="checkout-form" class="checkout-form" novalidate>
+          
+          <div class="form-block">
+            <h2 class="form-block-title">1. CUSTOMER INFORMATION</h2>
+            
+            <div class="form-group">
+              <label for="customer_name" class="form-label">Full Name <span class="required">*</span></label>
+              <input type="text" id="customer_name" name="customer_name" class="form-input" placeholder="e.g. Rohan Sharma" required />
+              <span class="form-error-msg" id="error-customer_name">Please enter your full name.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="customer_phone" class="form-label">WhatsApp Phone Number <span class="required">*</span></label>
+              <div class="input-prefix-wrap">
+                <span class="input-prefix">+91</span>
+                <input type="tel" id="customer_phone" name="customer_phone" class="form-input prefixed" placeholder="9876543210" maxlength="10" required />
+              </div>
+              <span class="form-error-msg" id="error-customer_phone">Enter a valid 10-digit Indian mobile number.</span>
+            </div>
+          </div>
+
+          <div class="form-block">
+            <h2 class="form-block-title">2. DELIVERY ADDRESS (INDIA ONLY)</h2>
+
+            <div class="form-group">
+              <label for="address" class="form-label">Street Address / House No. / Building <span class="required">*</span></label>
+              <textarea id="address" name="address" class="form-textarea" rows="3" placeholder="e.g. Flat 402, Speedline Apartments, Sector 15" required></textarea>
+              <span class="form-error-msg" id="error-address">Please enter your delivery street address.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="landmark" class="form-label">Landmark (Optional)</label>
+              <input type="text" id="landmark" name="landmark" class="form-input" placeholder="e.g. Near Central Skate Park or Metro Station" />
+            </div>
+
+            <div class="form-row dual-col">
+              <div class="form-group">
+                <label for="city" class="form-label">City <span class="required">*</span></label>
+                <input type="text" id="city" name="city" class="form-input" placeholder="e.g. Bengaluru" required />
+                <span class="form-error-msg" id="error-city">City is required.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="pin_code" class="form-label">PIN Code <span class="required">*</span></label>
+                <input type="text" id="pin_code" name="pin_code" class="form-input" placeholder="e.g. 560001" maxlength="6" required />
+                <span class="form-error-msg" id="error-pin_code">Enter a valid 6-digit PIN code.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="state" class="form-label">State <span class="required">*</span></label>
+              <select id="state" name="state" class="form-select" required>
+                <option value="" disabled selected>Select your State</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
+              <span class="form-error-msg" id="error-state">Please select your state.</span>
+            </div>
+          </div>
+
+          <div class="form-block">
+            <h2 class="form-block-title">3. PAYMENT POLICY NOTICE</h2>
+            <div class="payment-policy-card">
+              <div class="policy-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                <span class="policy-title">Manual UPI Transfer Order Flow</span>
+              </div>
+              <ul class="policy-list">
+                <li>Order submission saves your order and opens Skate Lab Official WhatsApp Business.</li>
+                <li>Admin sends official UPI Payment QR Code & UPI ID via WhatsApp chat.</li>
+                <li>No online payment gateway fees. Fast dispatch post UPI verification.</li>
+              </ul>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-order-btn" class="btn btn-whatsapp-primary btn-full btn-lg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            CONFIRM ORDER VIA WHATSAPP
+          </button>
+        </form>
+      </section>
+
+      <!-- Right Column: Order Items & Subtotal -->
+      <aside class="checkout-summary-aside" aria-label="Order Items Summary">
+        <div class="summary-card">
+          <h2 class="summary-card-title">BAG SUMMARY (<span id="summary-item-count">0</span>)</h2>
+
+          <div id="checkout-items-list" class="checkout-items-list">
+            <!-- Rendered Dynamically -->
+          </div>
+
+          <div class="checkout-breakdown">
+            <div class="breakdown-row">
+              <span>Subtotal</span>
+              <span id="checkout-subtotal">₹0</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Total Weight</span>
+              <span id="checkout-weight">0 g</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Shipping Fee</span>
+              <span id="checkout-shipping">₹0</span>
+            </div>
+            <div class="breakdown-row total-row">
+              <span>Amount Payable</span>
+              <span id="checkout-total" class="total-price">₹0</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 Skate Lab. High Performance Inline Accessories. India Shipping Only.</p>
+    </div>
+  </footer>
+
+  <!-- JS Dependencies -->
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/cart-store.js"></script>
+  <script src="assets/js/checkout.js"></script>
+</body>
+</html>

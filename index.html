@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skate Lab | Precision Inline Skating Hardware India</title>
+  <meta name="description" content="India's premier high-performance inline skating store. Ultra-high rebound urethane wheels, silicon nitride ceramic bearings, and CNC aluminum 7000 frames.">
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/header-footer.css">
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="brand-logo" aria-label="Skate Lab Home">
+        <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="nav-desktop">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="shop.html" class="nav-link">Inline Catalog</a>
+        <a href="search.html" class="nav-link">Search Gear</a>
+        <a href="legal/about.html" class="nav-link">About Lab</a>
+        <a href="legal/contact.html" class="nav-link">Support</a>
+      </nav>
+
+      <!-- Action Icons -->
+      <div class="header-actions">
+        <a href="search.html" class="cart-icon-btn" aria-label="Search Catalog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <button class="cart-icon-btn" id="cart-toggle-btn" data-action="open-cart" aria-label="View Gear Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-count-badge" id="cart-count">0</span>
+        </button>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-header">
+      <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+      <button id="mobile-nav-close" class="close-btn" aria-label="Close Menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link active">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Inline Catalog</a>
+      <a href="search.html" class="mobile-nav-link">Search Gear</a>
+      <a href="legal/about.html" class="mobile-nav-link">About Lab</a>
+      <a href="legal/contact.html" class="mobile-nav-link">Technical Support</a>
+      <a href="legal/shipping-policy.html" class="mobile-nav-link">Shipping Policy</a>
+    </nav>
+  </div>
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    
+    <!-- 1. HERO SECTION -->
+    <section class="hero-section">
+      <div class="container">
+        <span class="hero-subtitle">Engineered for Maximum Velocity</span>
+        <h1 class="hero-title">PRECISION INLINE ACCESSORIES</h1>
+        <p class="hero-description">
+          High-rebound urethane wheels, silicon nitride ceramic bearings, and 7000-series aluminum frames forged for serious inline skaters across India.
+        </p>
+        <div class="hero-cta-group">
+          <a href="shop.html" class="btn btn-primary btn-lg">EXPLORE CATALOG</a>
+          <a href="shop.html?category=wheels" class="btn btn-outline btn-lg">PRO WHEELS</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SHIPPING BANNER -->
+    <section class="shipping-banner">
+      <div class="container shipping-banner-inner">
+        <div class="shipping-banner-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+          <span><strong>FREE SHIPPING</strong> ON ALL INDIA ORDERS OVER ₹500</span>
+        </div>
+        <div class="shipping-banner-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span><strong>100% GENUINE</strong> HIGH-REBOUND HARDWARE</span>
+        </div>
+        <div class="shipping-banner-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span><strong>EXPRESS DISPATCH</strong> VIA SHIPROCKET</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FEATURED CATEGORIES -->
+    <section class="home-section container">
+      <div class="section-header">
+        <span class="section-tag">HARDWARE CATEGORIES</span>
+        <h2 class="section-title">PRECISION CATEGORIES</h2>
+        <p class="section-desc">Select your required inline specification</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="category-card-badge">85A – 88A POLYURETHANE</div>
+          <h3 class="product-card-title">INLINE WHEELS</h3>
+          <p class="category-card-desc">High-rebound street & marathon formula wheels engineered for Indian asphalt.</p>
+          <div class="product-card-price">From ₹3,499</div>
+          <a href="shop.html?category=wheels" class="btn btn-primary btn-sm btn-full">VIEW WHEELS</a>
+        </article>
+
+        <article class="product-card">
+          <div class="category-card-badge">SWISS & CERAMIC</div>
+          <h3 class="product-card-title">SWISS BEARINGS</h3>
+          <p class="category-card-desc">ILQ-9 speed bearings & Silicon Nitride Si3N4 anti-corrosion ceramic kits.</p>
+          <div class="product-card-price">From ₹2,199</div>
+          <a href="shop.html?category=bearings" class="btn btn-primary btn-sm btn-full">VIEW BEARINGS</a>
+        </article>
+
+        <article class="product-card">
+          <div class="category-card-badge">7000-SERIES CNC</div>
+          <h3 class="product-card-title">ALUMINUM FRAMES</h3>
+          <p class="category-card-desc">3x110mm & 4x90mm lightweight extruded chassis with zero flex transfer.</p>
+          <div class="product-card-price">From ₹6,999</div>
+          <a href="shop.html?category=frames" class="btn btn-primary btn-sm btn-full">VIEW FRAMES</a>
+        </article>
+
+        <article class="product-card">
+          <div class="category-card-badge">ANATOMIC IMPACT</div>
+          <h3 class="product-card-title">PROTECTIVE GEAR</h3>
+          <p class="category-card-desc">High-impact wrist guards, palm splints, and breathable knee pads.</p>
+          <div class="product-card-price">From ₹1,499</div>
+          <a href="shop.html?category=protective" class="btn btn-primary btn-sm btn-full">VIEW GEAR</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. DYNAMIC FEATURED PRODUCTS -->
+    <section class="home-section container">
+      <div class="section-header flex-header">
+        <div>
+          <span class="section-tag">CURATED GEAR</span>
+          <h2 class="section-title">FEATURED ACCESSORIES</h2>
+        </div>
+        <a href="shop.html" class="link-action">Explore All Gear &rarr;</a>
+      </div>
+
+      <div id="homeFeaturedGrid" class="product-grid">
+        <!-- Rendered dynamically by home.js -->
+      </div>
+    </section>
+
+    <!-- 5. WHY CHOOSE SKATE LAB -->
+    <section class="why-choose-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">LAB SPECIFICATIONS</span>
+          <h2 class="section-title">WHY SKATE LAB?</h2>
+          <p class="section-desc">Zero compromises. Built exclusively for domestic inline athletes.</p>
+        </div>
+
+        <div class="why-choose-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
+                <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
+                <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">High-Rebound Urethane</h3>
+            <p class="feature-text">85A to 88A durometer compounds custom formulated to balance roll speed and road grip on rough pavements.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h3 class="feature-title">Silicon Nitride Ceramics</h3>
+            <p class="feature-text">Self-cleaning Si3N4 ceramic bearing balls that eliminate heat expansion and prevent rust under wet conditions.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">CNC Structural Frames</h3>
+            <p class="feature-text">Aircraft-grade 7000-series extruded aluminum frames with 165mm, 195mm, and 3-point Trinity pitch mounting support.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Direct WhatsApp Support</h3>
+            <p class="feature-text">Connect directly with inline technical specialists before purchasing to verify exact frame sizes, axle fits, and durometers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ABOUT PREVIEW SECTION -->
+    <section class="home-section container">
+      <div class="about-preview-box">
+        <div class="about-preview-content">
+          <span class="section-tag">OUR DISCIPLINE</span>
+          <h2 class="about-preview-title">BORN FOR INLINE SPEED & FREESTYLE</h2>
+          <p class="about-preview-text">
+            Skate Lab is India's dedicated specialist store for inline skating accessories. We do not sell skateboards, bicycles, or general footwear. Every item in our lab is chosen specifically to enhance speed, agility, and power transfer for inline skaters.
+          </p>
+          <a href="legal/about.html" class="btn btn-outline">READ OUR STORY</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FAQ PREVIEW SECTION -->
+    <section class="home-section container">
+      <div class="section-header text-center">
+        <span class="section-tag">TECHNICAL HELP</span>
+        <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+        <p class="section-desc">Key answers for inline hardware selection</p>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary class="faq-question">What wheel durometer is best for Indian street conditions?</summary>
+          <div class="faq-answer">
+            <p>For Indian asphalt and concrete roads, <strong>85A to 88A durometer</strong> wheels are optimal. They offer maximum high-rebound shock absorption over rough surfaces while preserving top-end roll speed.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Are these accessories compatible with standard inline skates?</summary>
+          <div class="faq-answer">
+            <p>Yes. Our wheels fit standard 608 bearing hubs, and our speed frames support universal 165mm, 195mm, and Trinity mounting distances used by leading inline brands.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">How does shipping and order confirmation work?</summary>
+          <div class="faq-answer">
+            <p>All orders over ₹500 qualify for <strong>FREE India delivery</strong>. When you checkout, your order details are securely routed to our official WhatsApp support for instant confirmation and manual UPI setup.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 8. WHATSAPP CTA SECTION -->
+    <section class="whatsapp-cta-section container">
+      <div class="whatsapp-cta-card">
+        <div class="whatsapp-cta-info">
+          <h2 class="whatsapp-cta-title">NEED TECHNICAL FITMENT ASSISTANCE?</h2>
+          <p class="whatsapp-cta-text">Unsure about bearing tolerances, wheel diameters, or frame mounting pitch? Speak directly with our lab technicians.</p>
+        </div>
+        <a href="https://wa.me/917063062326?text=Hi%20Skate%20Lab,%20I%20need%20technical%20assistance%20with%20inline%20accessories." target="_blank" rel="noopener" class="btn btn-primary btn-lg whatsapp-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+          </svg>
+          CHAT ON WHATSAPP
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-grid">
+        
+        <div class="footer-brand-col">
+          <a href="index.html" class="brand-logo mb-1">
+            <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+          </a>
+          <p class="footer-tagline">India's premier exclusive inline skating accessories retailer. Engineered for precision, speed, and maximum durability.</p>
+          <div class="footer-badge">INLINE ACCESSORIES ONLY</div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-title">LAB GUIDES</h4>
+          <ul class="footer-links">
+            <li><a href="legal/about.html">About Us</a></li>
+            <li><a href="legal/contact.html">Contact Us</a></li>
+            <li><a href="legal/contact.html">Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-title">POLICIES</h4>
+          <ul class="footer-links">
+            <li><a href="legal/privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="legal/refund-policy.html">Refund & Return Policy</a></li>
+            <li><a href="legal/shipping-policy.html">Shipping Policy</a></li>
+            <li><a href="legal/terms.html">Terms & Conditions</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Skate Lab. High Performance Inline Accessories. Domestic India Shipping Only.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/cart-store.js"></script>
+  <script src="assets/js/cart-drawer.js"></script>
+  <script src="assets/js/home.js"></script>
+</body>
+</html>

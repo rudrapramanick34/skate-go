@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Inline Gear | Skate Lab India</title>
+  <meta name="description" content="Search premium inline skating wheels, bearings, frames, and protective gear. Filter by size, category, and price.">
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/header-footer.css">
+  <link rel="stylesheet" href="assets/css/pages/search.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="brand-logo" aria-label="Skate Lab Home">
+        <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Catalog</a>
+        <a href="search.html" class="nav-link active">Search</a>
+      </nav>
+      <div class="header-actions">
+        <button class="cart-icon-btn" data-action="open-cart" aria-label="View Shopping Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-count-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="search-page-main container">
+    
+    <!-- Hero Search Bar -->
+    <section class="search-hero-section">
+      <h1 class="search-page-title">HIGH-PERFORMANCE GEAR SEARCH</h1>
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="global-search-input" class="search-hero-input" placeholder="Search wheels, ILQ-9 bearings, frames, buckles..." autocomplete="off" />
+        <button id="clear-search-btn" class="clear-search-btn" aria-label="Clear Search" style="display: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Quick Search Tag Pills -->
+      <div class="quick-tags-container">
+        <span class="quick-tags-label">Popular Searches:</span>
+        <button class="tag-pill" data-tag="80mm Wheels">80mm Wheels</button>
+        <button class="tag-pill" data-tag="ILQ-9 Bearings">ILQ-9 Bearings</button>
+        <button class="tag-pill" data-tag="3x110 Frame">3x110 Frame</button>
+        <button class="tag-pill" data-tag="Ceramic">Ceramic</button>
+        <button class="tag-pill" data-tag="Wrist Guards">Wrist Guards</button>
+      </div>
+    </section>
+
+    <!-- Search Controls Bar -->
+    <div class="search-controls-bar">
+      <div class="results-count-text">
+        Showing <strong id="results-count">0</strong> matching components
+      </div>
+      
+      <div class="controls-group">
+        <button id="toggle-filter-btn" class="btn btn-outline btn-sm filter-toggle-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          Filters <span id="active-filter-badge" class="filter-count-badge" style="display: none;">0</span>
+        </button>
+
+        <div class="sort-select-wrapper">
+          <label for="sort-select" class="visually-hidden">Sort Results</label>
+          <select id="sort-select" class="sort-select">
+            <option value="relevance">Relevance</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="newest">Newest First</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Filter Chips -->
+    <div id="active-chips-container" class="active-chips-container" style="display: none;">
+      <!-- Dynamically Injected Chips -->
+    </div>
+
+    <!-- Layout: Sidebar + Grid -->
+    <div class="search-layout">
+      
+      <!-- Filter Sidebar / Drawer -->
+      <aside id="filter-sidebar" class="filter-sidebar">
+        <div class="filter-sidebar-header">
+          <h3 class="filter-sidebar-title">REFINE SPECIFICATIONS</h3>
+          <button id="close-filter-btn" class="close-filter-btn" aria-label="Close Filters">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-accordion-group">
+          <h4 class="filter-group-title">Category</h4>
+          <div class="filter-options-list" id="category-filters">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="category" value="wheels" />
+              <span>Inline Wheels</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="category" value="bearings" />
+              <span>Bearings & Speed Kits</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="category" value="frames" />
+              <span>Frames & Chassis</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="category" value="protective" />
+              <span>Protective Gear</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="category" value="maintenance" />
+              <span>Maintenance & Tools</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="category" value="accessories" />
+              <span>Laces, Buckles & Bags</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="filter-accordion-group">
+          <h4 class="filter-group-title">Price Range (₹)</h4>
+          <div class="price-inputs-row">
+            <input type="number" id="min-price-input" placeholder="Min ₹" min="0" step="100" class="price-input" />
+            <span class="price-sep">-</span>
+            <input type="number" id="max-price-input" placeholder="Max ₹" min="0" step="100" class="price-input" />
+          </div>
+        </div>
+
+        <!-- Wheel Diameter Spec Filter -->
+        <div class="filter-accordion-group">
+          <h4 class="filter-group-title">Wheel Diameter</h4>
+          <div class="filter-options-list" id="diameter-filters">
+            <label class="filter-checkbox-label"><input type="checkbox" name="diameter" value="76mm" /><span>76mm</span></label>
+            <label class="filter-checkbox-label"><input type="checkbox" name="diameter" value="80mm" /><span>80mm</span></label>
+            <label class="filter-checkbox-label"><input type="checkbox" name="diameter" value="84mm" /><span>84mm</span></label>
+            <label class="filter-checkbox-label"><input type="checkbox" name="diameter" value="90mm" /><span>90mm</span></label>
+            <label class="filter-checkbox-label"><input type="checkbox" name="diameter" value="110mm" /><span>110mm</span></label>
+            <label class="filter-checkbox-label"><input type="checkbox" name="diameter" value="125mm" /><span>125mm</span></label>
+          </div>
+        </div>
+
+        <div class="filter-actions-group">
+          <button id="reset-filters-btn" class="btn btn-outline btn-full">RESET ALL</button>
+        </div>
+      </aside>
+
+      <!-- Results Grid Container -->
+      <section class="results-grid-section">
+        <div id="search-results-grid" class="search-results-grid">
+          <!-- Dynamically Injected Product Cards -->
+        </div>
+
+        <!-- Empty Search Results State -->
+        <div id="no-results-state" class="no-results-state" style="display: none;">
+          <div class="no-results-icon">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
+          <h3 class="no-results-title">NO MATCHING INLINE GEAR FOUND</h3>
+          <p class="no-results-desc">Try adjusting your search query or relaxing filter parameters.</p>
+          <button class="btn btn-primary" onclick="resetSearchEngine()">CLEAR ALL FILTERS</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 Skate Lab. Precision Inline Skating Accessories. India Domestic Shipping.</p>
+    </div>
+  </footer>
+
+  <!-- JS Dependencies -->
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/cart-store.js"></script>
+  <script src="assets/js/cart-drawer.js"></script>
+  <script src="assets/js/search.js"></script>
+</body>
+</html>

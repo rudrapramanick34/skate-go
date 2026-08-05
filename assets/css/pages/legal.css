@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Skate Lab - Legal & Informational Pages Styles
+   Mobile-First | High-Contrast Luxury Dark Aesthetic
+   ========================================================================== */
+
+.legal-container {
+  padding: 2rem 1rem 4rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.legal-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--color-card-border, #222222);
+  padding-bottom: 1.5rem;
+}
+
+.legal-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-primary, #EE0039);
+  margin-bottom: 0.5rem;
+}
+
+.legal-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-main, #FFFFFF);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.legal-updated {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #BDBDBD);
+  margin-top: 0.5rem;
+}
+
+.legal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.legal-section {
+  background: var(--color-card, #151515);
+  border: 1px solid var(--color-card-border, #222222);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: border-color 0.2s ease;
+}
+
+.legal-section:hover {
+  border-color: rgba(238, 0, 57, 0.3);
+}
+
+.legal-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-main, #FFFFFF);
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legal-section h2::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1rem;
+  background-color: var(--color-primary, #EE0039);
+  border-radius: 2px;
+}
+
+.legal-section p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary, #BDBDBD);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.legal-section p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0;
+}
+
+.legal-list li {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary, #BDBDBD);
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-list li::before {
+  content: "•";
+  color: var(--color-primary, #EE0039);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.highlight-box {
+  background: rgba(84, 9, 27, 0.4);
+  border-left: 3px solid var(--color-primary, #EE0039);
+  padding: 1rem;
+  border-radius: 0 6px 6px 0;
+  margin: 1rem 0;
+}
+
+.highlight-box p {
+  color: var(--color-text-main, #FFFFFF) !important;
+  font-weight: 500;
+
+}
+
+/* Form Styles for Contact Page */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1px;
+  gap: 1.5rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-secondary, #BDBDBD);
+}
+
+.form-control {
+  width: 100%;
+  background: var(--color-background, #0B0B0B);
+  border: 1px solid var(--color-card-border, #222222);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  color: var(--color-text-main, #FFFFFF);
+  font-size: 1rem;
+  outline: none;
+  min-height: 48px; /* Minimum 44px touch target requirement */
+}
+
+.form-control:focus {
+  border-color: var(--color-primary, #EE0039);
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.btn-primary-action {
+  background: var(--color-primary, #EE0039);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 0.95rem 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.btn-primary-action:hover {
+  background: #C4002F;
+}
+
+/* Responsive Enhancements */
+@media (min-width: 768px) {
+  .legal-container {
+    padding: 3rem 2rem 6rem 2rem;
+  }
+
+  .legal-title {
+    font-size: 2.75rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

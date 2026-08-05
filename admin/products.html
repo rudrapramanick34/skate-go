@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Management | Skate Lab Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/admin.css">
+</head>
+<body>
+
+  <div class="admin-wrapper">
+    <!-- Header Navbar -->
+    <header class="admin-navbar">
+      <div class="admin-navbar-inner">
+        <a href="../index.html" class="brand-logo" target="_blank">
+          <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        </a>
+        <nav class="admin-nav-links">
+          <a href="dashboard.html" class="admin-nav-link">Dashboard</a>
+          <a href="products.html" class="admin-nav-link active">Products</a>
+          <a href="categories.html" class="admin-nav-link">Categories</a>
+          <a href="orders.html" class="admin-nav-link">Orders</a>
+          <button class="btn-logout" onclick="window.adminAuthGuard.logout()">SIGN OUT</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+      <div class="dashboard-card-title" style="margin-bottom: 1.5rem; border: none; padding: 0;">
+        <div>
+          <h1 class="dashboard-title">INVENTORY MANAGER</h1>
+          <p class="dashboard-subtitle">Manage inline wheels, bearings, frames, stock levels, variants, and catalog visibility.</p>
+        </div>
+        <button id="open-add-product-btn" class="btn btn-primary btn-sm">+ ADD NEW GEAR</button>
+      </div>
+
+      <!-- Advanced Filter & Search Controls -->
+      <section class="admin-filter-container">
+        <div class="filter-row-top">
+          <input type="text" id="product-search-input" class="form-input" placeholder="Search by Product Name, Category, or Brand..." />
+          <select id="filter-category" class="form-select">
+            <option value="">All Categories</option>
+          </select>
+          <select id="sort-products" class="form-select">
+            <option value="newest">Sort: Newest First</option>
+            <option value="oldest">Sort: Oldest First</option>
+            <option value="price_asc">Sort: Price Low &rarr; High</option>
+            <option value="price_desc">Sort: Price High &rarr; Low</option>
+          </select>
+        </div>
+
+        <div class="filter-row-bottom">
+          <select id="filter-stock" class="form-select">
+            <option value="">All Stock Statuses</option>
+            <option value="in_stock">In Stock (&gt; 5)</option>
+            <option value="low_stock">Low Stock (&le; 5)</option>
+            <option value="out_of_stock">Out of Stock (0)</option>
+          </select>
+          <select id="filter-visibility" class="form-select">
+            <option value="">All Visibilities</option>
+            <option value="visible">Active / Visible</option>
+            <option value="hidden">Inactive / Hidden</option>
+          </select>
+          <select id="filter-featured" class="form-select">
+            <option value="">All Listings</option>
+            <option value="featured">Featured Only</option>
+            <option value="standard">Standard Only</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Products Table -->
+      <section class="dashboard-card">
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Discount Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-tbody">
+              <!-- Dynamically Populated Rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-container">
+          <div id="pagination-info">Showing 0 products</div>
+          <div class="pagination-controls" id="pagination-controls">
+            <!-- Dynamically Rendered Page Buttons -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Product Modal / Drawer -->
+  <div id="product-modal-overlay" class="cart-drawer-overlay" aria-hidden="true"></div>
+  <div id="product-modal" class="cart-drawer" style="max-width: 680px;" aria-hidden="true">
+    <header class="cart-drawer-header">
+      <h2 id="modal-product-title" class="cart-drawer-title">ADD NEW PRODUCT</h2>
+      <button id="close-product-modal" class="cart-drawer-close-btn">&times;</button>
+    </header>
+
+    <div id="modal-alert-box" class="admin-alert alert-danger" style="display: none; margin: 1rem 1.5rem 0;"></div>
+
+    <form id="product-form" class="admin-form" style="padding: 1.5rem; overflow-y: auto; flex: 1;" novalidate>
+      <input type="hidden" id="prod-id" />
+
+      <!-- Title & SEO Slug -->
+      <div class="form-row dual-col">
+        <div class="form-group">
+          <label for="prod-title" class="form-label">Product Name *</label>
+          <input type="text" id="prod-title" class="form-input" placeholder="e.g. Atom Matrix 80mm Wheels" required />
+        </div>
+        <div class="form-group">
+          <label for="prod-slug" class="form-label">SEO Slug * (Auto generated)</label>
+          <input type="text" id="prod-slug" class="form-input" placeholder="e.g. atom-matrix-80mm-wheels" required />
+        </div>
+      </div>
+
+      <!-- Category & Brand -->
+      <div class="form-row dual-col">
+        <div class="form-group">
+          <label for="prod-category" class="form-label">Category *</label>
+          <select id="prod-category" class="form-select" required>
+            <!-- Injected categories -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="prod-brand" class="form-label">Brand</label>
+          <input type="text" id="prod-brand" class="form-input" placeholder="e.g. Atom / Flying Eagle / Powerslide" />
+        </div>
+      </div>
+
+      <!-- Price & Discount Price -->
+      <div class="form-row dual-col">
+        <div class="form-group">
+          <label for="prod-price" class="form-label">Price (₹) *</label>
+          <input type="number" id="prod-price" class="form-input" placeholder="3499" min="0.01" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label for="prod-orig-price" class="form-label">
+            Discount Price (Original Price ₹)
+            <span id="discount-calc-badge" class="discount-tag" style="display: none;">0% OFF</span>
+          </label>
+          <input type="number" id="prod-orig-price" class="form-input" placeholder="4200" min="0" step="0.01" />
+        </div>
+      </div>
+
+      <!-- Stock Quantity & Weight -->
+      <div class="form-row dual-col">
+        <div class="form-group">
+          <label for="prod-stock" class="form-label">Stock Quantity *</label>
+          <input type="number" id="prod-stock" class="form-input" placeholder="25" min="0" required />
+        </div>
+        <div class="form-group">
+          <label for="prod-weight" class="form-label">Weight (Grams / Spec)</label>
+          <input type="text" id="prod-weight" class="form-input" placeholder="e.g. 450g" />
+        </div>
+      </div>
+
+      <!-- Available Colors & Available Sizes -->
+      <div class="form-row dual-col">
+        <div class="form-group">
+          <label for="prod-colors" class="form-label">Available Colors (Comma-separated)</label>
+          <input type="text" id="prod-colors" class="form-input" placeholder="Black, Red, Smoke White" />
+        </div>
+        <div class="form-group">
+          <label for="prod-sizes" class="form-label">Available Sizes (Comma-separated)</label>
+          <input type="text" id="prod-sizes" class="form-input" placeholder="76mm, 80mm, 84mm" />
+        </div>
+      </div>
+
+      <!-- Visibility & Featured Flags -->
+      <div class="form-row dual-col" style="margin-top: 0.25rem;">
+        <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+          <input type="checkbox" id="prod-active" checked style="width: 18px; height: 18px; cursor: pointer;" />
+          <label for="prod-active" class="form-label" style="margin:0; cursor:pointer;">Active / Visible in Catalog</label>
+        </div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+          <input type="checkbox" id="prod-featured" style="width: 18px; height: 18px; cursor: pointer;" />
+          <label for="prod-featured" class="form-label" style="margin:0; cursor:pointer;">Featured Product</label>
+        </div>
+      </div>
+
+      <!-- Short Description & Description -->
+      <div class="form-group">
+        <label for="prod-short-desc" class="form-label">Short Description</label>
+        <input type="text" id="prod-short-desc" class="form-input" placeholder="High-rebound 80mm 86A inline speed wheels set..." />
+      </div>
+
+      <div class="form-group">
+        <label for="prod-desc" class="form-label">Detailed Description</label>
+        <textarea id="prod-desc" class="form-textarea" rows="3" placeholder="Full technical specifications, material composition, compatibility..."></textarea>
+      </div>
+
+      <!-- SEO Metadata Fields -->
+      <div class="form-group">
+        <label for="prod-seo-title" class="form-label">SEO Title</label>
+        <input type="text" id="prod-seo-title" class="form-input" placeholder="Buy Atom Matrix 80mm Wheels Online | Skate Lab India" />
+      </div>
+
+      <div class="form-group">
+        <label for="prod-seo-desc" class="form-label">SEO Description</label>
+        <textarea id="prod-seo-desc" class="form-textarea" rows="2" placeholder="Order genuine Atom Matrix speed wheels with fast domestic India shipping..."></textarea>
+      </div>
+
+      <!-- Images Section (6-7 Product Images) -->
+      <div class="form-group">
+        <label class="form-label">Product Images (Maximum 7 - First image is Primary)</label>
+        <input type="file" id="prod-file-input" class="form-input" accept="image/*" multiple />
+        <div id="upload-progress-text" style="font-size: 0.8rem; color: var(--color-primary); margin-top: 0.4rem; display: none;">Uploading & compressing images...</div>
+
+        <div style="margin-top: 0.5rem;">
+          <label for="prod-url-input" class="form-label" style="font-size: 0.75rem; color: var(--color-text-secondary);">Or Add Image Direct URL:</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="url" id="prod-url-input" class="form-input" placeholder="https://..." />
+            <button type="button" id="add-url-btn" class="btn btn-outline btn-sm">+ Add URL</button>
+          </div>
+        </div>
+
+        <!-- Image Gallery Preview Grid -->
+        <div id="image-gallery-grid" class="image-upload-gallery">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <button type="submit" id="save-product-btn" class="btn btn-primary btn-full">SAVE PRODUCT</button>
+    </form>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="confirm-delete-overlay" class="cart-drawer-overlay" aria-hidden="true"></div>
+  <div id="confirm-delete-modal" class="cart-drawer" style="max-width: 420px; height: auto; max-height: 90vh;" aria-hidden="true">
+    <header class="cart-drawer-header">
+      <h2 class="cart-drawer-title" style="color: #ff4d4d;">CONFIRM DELETION</h2>
+      <button id="close-delete-modal" class="cart-drawer-close-btn">&times;</button>
+    </header>
+    <div style="padding: 1.5rem;">
+      <p style="font-size: 0.9rem; color: var(--color-text-main); margin-bottom: 1.25rem; line-height: 1.4;">
+        Are you sure you want to delete <strong id="delete-prod-title">this product</strong>? All image assets and database records will be permanently removed.
+      </p>
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button type="button" id="cancel-delete-btn" class="btn btn-outline btn-sm">Cancel</button>
+        <button type="button" id="confirm-delete-btn" class="btn-logout">DELETE PERMANENTLY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Dependencies -->
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/admin/admin-auth.js"></script>
+  <script src="../assets/js/admin/products.js"></script>
+</body>
+</html>

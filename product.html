@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Product Details | Skate Lab</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/header-footer.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="brand-logo" aria-label="Skate Lab Home">
+        <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+      </a>
+
+      <nav class="nav-desktop">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link active">Inline Catalog</a>
+        <a href="search.html" class="nav-link">Search Gear</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-icon-btn" id="cart-toggle-btn" data-action="open-cart" aria-label="View Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-count-badge" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PDP CONTAINER -->
+  <main class="pdp-container container">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="shop.html">Inline Catalog</a>
+      <span class="breadcrumb-separator">/</span>
+      <span id="pdp-crumb-title" class="breadcrumb-current">Gear Spec</span>
+    </nav>
+
+    <!-- Dynamic Product Main Content -->
+    <div id="pdp-main-content">
+      <div class="pdp-loading-state">
+        <div class="spinner"></div>
+        <p>Loading High Performance Inline Gear Specs...</p>
+      </div>
+    </div>
+
+    <!-- Order & Return Policy Section -->
+    <section class="order-return-policy-section">
+      <h2 class="section-title"> Read Before Make Any Orders </h2>
+      <div class="policy-content">
+        <h3>✅ Genuine Products Only</h3>
+        <p>All products sold by Skate Lab are 100% genuine and quality inspected before dispatch.</p>
+
+        <h3>✅ Mandatory Unboxing Video</h3>
+        <p>A continuous unboxing video is COMPULSORY from the moment the sealed package is opened.</p>
+        <p>No cuts.</p>
+        <p>No edits.</p>
+        <p>No pauses.</p>
+        <p>Without a valid unboxing video, any damage, missing item or wrong product claim will not be accepted.</p>
+
+        <h3>✅ Returns</h3>
+        <p>Returns are accepted only for:</p>
+        <ul>
+          <li>Manufacturing defects</li>
+          <li>Wrong item shipped</li>
+          <li>Damaged product received</li>
+        </ul>
+        <p>Returns are NOT accepted for:</p>
+        <ul>
+          <li>Change of mind</li>
+          <li>Used products</li>
+          <li>Normal wear & tear</li>
+          <li>Incorrect order placed by customer</li>
+        </ul>
+
+        <h3>✅ Return Shipping</h3>
+        <p>If the return is approved,</p>
+        <p>the customer must bear the return shipping cost unless Skate Lab shipped the wrong product or the product has a verified manufacturing defect.</p>
+        <p>The returned product must reach Skate Lab in its original packaging with all accessories.</p>
+
+        <h3>✅ Size Exchange</h3>
+        <p>Size exchanges are available only for eligible products.</p>
+        <p>The customer is responsible for both forward and return shipping charges.</p>
+        <p>The product must be unused and in original condition.</p>
+
+        <h3>✅ Order Cancellation</h3>
+        <p>Orders can only be cancelled before dispatch.</p>
+        <p>Once shipped, cancellation is not possible.</p>
+
+        <h3>✅ Warranty</h3>
+        <p>Warranty (if applicable) depends on the manufacturer.</p>
+        <p>Physical damage, water damage, misuse or normal wear are not covered.</p>
+      </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products-section">
+      <h2 class="section-title">RELATED INLINE GEAR</h2>
+      <div id="related-products-grid" class="related-products-grid">
+        <!-- Dynamic Related Products Loaded via JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification System -->
+  <div id="pdp-toast" class="pdp-toast" aria-live="polite"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 Skate Lab. High Performance Inline Accessories. India Shipping Only.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/cart-store.js"></script>
+  <script src="assets/js/cart-drawer.js"></script>
+  <script src="assets/js/product.js"></script>
+</body>
+</html>
