@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Dynamic Cart Drawer & Navigation Controller
+ * Skate Go - Dynamic Cart Drawer & Navigation Controller
  * Handles cart overlay injection, slide-over navigation, dynamic rendering, and event bindings.
  */
 

@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Product Detail Page (PDP)
+ * Skate Go - Product Detail Page (PDP)
  * Module 05 & Module 10 Integration - Product Specifications, Variant Handling, Policies & Related Gear
  */
 
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : null;
   let selectedSize = (product.sizes && product.sizes.length > 0) ? product.sizes[0] : null;
 
-  document.title = `${product.title} | Skate Lab`;
+  document.title = `${product.title} | Skate Go`;
   if (crumbTitle) crumbTitle.textContent = product.title;
 
   const categoryName = product.categories ? product.categories.name : 'INLINE GEAR';
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               ${product.brand ? `<div><strong>Brand:</strong> ${product.brand}</div>` : ''}
               ${product.weight ? `<div><strong>Weight:</strong> ${product.weight}</div>` : ''}
               <div><strong>Category:</strong> ${categoryName}</div>
-              <div><strong>Quality:</strong> Authentic Skate Lab Spec</div>
+              <div><strong>Quality:</strong> Authentic Skate Go Spec</div>
             </div>
           </div>
         ` : ''}

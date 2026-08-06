@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Admin Order Processing & Fulfillment Controller
+ * Skate Go - Admin Order Processing & Fulfillment Controller
  * Module 9: Realtime Updates, Timeline, PDF/Print Labels & Packing Slips, Search, Filters
  */
 
@@ -400,7 +400,7 @@ window.printShippingLabel = function(orderId) {
     <div style="font-family: Arial, sans-serif; width: 100%; max-width: 500px; border: 3px solid #000; padding: 20px; box-sizing: border-box; margin: 0 auto;">
       <div style="border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <h2 style="margin:0; font-size: 22px; font-weight: bold;">SKATE LAB INDIA</h2>
+          <h2 style="margin:0; font-size: 22px; font-weight: bold;">Skate Go INDIA</h2>
           <p style="margin:0; font-size: 11px;">PREMIUM SPEED & INLINE ACCESSORIES</p>
         </div>
         <div style="text-align: right;">
@@ -459,7 +459,7 @@ window.printPackingSlip = function(orderId) {
     <div style="font-family: sans-serif; color: #000; padding: 20px; max-width: 800px; margin: 0 auto;">
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
         <div>
-          <h1 style="margin: 0; font-size: 24px; font-weight: bold;">SKATE LAB INDIA</h1>
+          <h1 style="margin: 0; font-size: 24px; font-weight: bold;">Skate Go INDIA</h1>
           <p style="margin: 3px 0 0 0; font-size: 12px; color: #555;">PACKING SLIP & OFFICIAL INVOICE</p>
         </div>
         <div style="text-align: right;">
@@ -505,7 +505,7 @@ window.printPackingSlip = function(orderId) {
       </div>
 
       <div style="text-align: center; border-top: 1px dashed #ccc; padding-top: 15px; font-size: 12px;">
-        🛹 Thank you for skating with Skate Lab India! Tag @skatelab on Instagram.
+        🛹 Thank you for skating with Skate Go India! Tag @skatelab on Instagram.
       </div>
     </div>
   `;

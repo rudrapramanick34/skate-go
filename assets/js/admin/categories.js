@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Category & Inventory Management Controller
+ * Skate Go - Category & Inventory Management Controller
  * Module 8: Category CRUD with Delete Guard, Stock Control, Badges & Bulk Updates
  */
 

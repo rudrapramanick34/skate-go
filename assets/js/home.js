@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Home Page Controller
+ * Skate Go - Home Page Controller
  * Module 10: Dynamic Store Announcement, Hero Banner, & Maintenance Mode Integration
  */
 
@@ -59,7 +59,7 @@ async function checkMaintenanceAndHydrateStore() {
     }
 
   } catch (err) {
-    console.warn('[Skate Lab Home] Store hydration warning:', err);
+    console.warn('[Skate Go Home] Store hydration warning:', err);
   }
 }
 
@@ -69,7 +69,7 @@ async function checkMaintenanceAndHydrateStore() {
 function renderMaintenanceOverlay(s) {
   document.body.innerHTML = `
     <div style="min-height: 100vh; background: #0a0a0a; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; font-family: system-ui, sans-serif;">
-      ${s.store_logo ? `<img src="${s.store_logo}" alt="${s.store_name}" style="max-height: 60px; margin-bottom: 1.5rem;">` : '<h1 style="color: #e63946; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">SKATE LAB</h1>'}
+      ${s.store_logo ? `<img src="${s.store_logo}" alt="${s.store_name}" style="max-height: 60px; margin-bottom: 1.5rem;">` : '<h1 style="color: #e63946; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Skate Go</h1>'}
       <div style="background: rgba(230, 57, 70, 0.1); border: 1px solid #e63946; border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1.5rem;">🛠️</div>
       <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: 0.05em;">STORE UNDER MAINTENANCE</h2>
       <p style="color: #a0a0a0; max-width: 500px; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">

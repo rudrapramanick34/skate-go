@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Cart Store Manager
+ * Skate Go - Cart Store Manager
  * Single source of truth for client-side shopping cart persistence.
  * Uses localStorage key: 'skate_lab_cart'
  */

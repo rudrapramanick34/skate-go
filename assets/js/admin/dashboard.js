@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Admin Dashboard & BI Controller
+ * Skate Go - Admin Dashboard & BI Controller
  * Module 10: Complete Store Settings & Business Control Center
  */
 
@@ -65,7 +65,7 @@ async function loadAllDashboardData() {
     populateAllSettingsForms();
 
   } catch (err) {
-    console.error('[Skate Lab Control Center] Telemetry initialization error:', err);
+    console.error('[Skate Go Control Center] Telemetry initialization error:', err);
   }
 }
 

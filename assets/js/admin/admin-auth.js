@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Admin Auth Guard
+ * Skate Go - Admin Auth Guard
  * Centralized Supabase Auth helper for checking active sessions, route protection, login & logout execution.
  */
 

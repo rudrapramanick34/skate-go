@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Admin Products Controller
+ * Skate Go - Admin Products Controller
  * Module 7: Complete Product Management System (CRUD)
  */
 

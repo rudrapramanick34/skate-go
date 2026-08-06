@@ -4,7 +4,7 @@
 PROJECT STATUS
 ===========================================
 
-Project Name          : Skate Lab
+Project Name          : Skate Go
 Version               : 1.0
 Current Module        : Module 02
 Completed             : 20%
@@ -17,7 +17,7 @@ Current Phase         : Phase 1 - Architecture & Data Infrastructure
 ===========================================
 
 > **CRITICAL INSTRUCTION FOR ALL AI SESSIONS:**  
-> This file is the **SINGLE SOURCE OF TRUTH** for the **Skate Lab** project.  
+> This file is the **SINGLE SOURCE OF TRUTH** for the **Skate Go** project.  
 > Before generating any code, modifying any files, or planning any features, you **MUST READ THIS FILE FIRST**.  
 > Never continue coding without referencing and updating `PROJECT_MASTER.md`.
 
@@ -25,13 +25,13 @@ Current Phase         : Phase 1 - Architecture & Data Infrastructure
 
 ## 1. PROJECT VISION & OVERVIEW
 
-**Skate Lab** is a high-end, luxury, minimal, dark-themed e-commerce experience dedicated exclusively to **Inline Skating Accessories** in India. The design aesthetic draws heavy inspiration from premium modern brands like Apple and Nike—focused on precision, dark elegance, high contrast, clean micro-interactions, and mobile-first ergonomics.
+**Skate Go** is a high-end, luxury, minimal, dark-themed e-commerce experience dedicated exclusively to **Inline Skating Accessories** in India. The design aesthetic draws heavy inspiration from premium modern brands like Apple and Nike—focused on precision, dark elegance, high contrast, clean micro-interactions, and mobile-first ergonomics.
 
 ---
 
 ## 2. BUSINESS INFORMATION
 
-- **Business Name:** Skate Lab
+- **Business Name:** Skate Go
 - **Niche / Focus:** Premium Inline Skating Accessories ONLY.
   - ❌ NOT Skateboards
   - ❌ NOT Shoes / Sneakers
@@ -90,7 +90,7 @@ Customer browses products and adds items to cart.
 Customer proceeds to Checkout.
 Customer fills Checkout Form (Name, Phone, State, City, PIN, Address, Landmark - NO Email).
 Customer clicks "Confirm Order via WhatsApp".
-System generates formatted order summary & opens WhatsApp targeting official Skate Lab WhatsApp Business Number.
+System generates formatted order summary & opens WhatsApp targeting official Skate Go WhatsApp Business Number.
 Admin reviews order details on WhatsApp and sends UPI Payment QR / UPI ID.
 Customer executes UPI payment and sends screenshot/transaction reference.
 Admin manually verifies payment and updates order status in Admin Panel.

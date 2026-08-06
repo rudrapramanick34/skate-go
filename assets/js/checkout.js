@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Express Checkout & WhatsApp Routing Controller
+ * Skate Go - Express Checkout & WhatsApp Routing Controller
  * Module 9: Order Management & Fulfillment Integration
  */
 
@@ -215,7 +215,7 @@ function validateForm() {
 }
 
 function buildWhatsAppUrl(orderNumber, formData, cartState) {
-  let text = `⚡ *SKATE LAB - NEW DIRECT ORDER*\n`;
+  let text = `⚡ *Skate Go - NEW DIRECT ORDER*\n`;
   text += `------------------------------------\n`;
   text += `*Order ID:* ${orderNumber}\n`;
   text += `*Customer:* ${formData.customer_name}\n`;

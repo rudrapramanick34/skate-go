@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Supabase Integration Client & Service Layer
+ * Skate Go - Supabase Integration Client & Service Layer
  * Module 10: Store Settings & Business Control Center Integration
  */
 
@@ -73,7 +73,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data: data || [] };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error fetching categories:', err.message);
+      console.error('[Skate Go DataService] Error fetching categories:', err.message);
       return { success: false, error: err.message, data: [] };
     }
   }
@@ -109,7 +109,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error creating category:', err.message);
+      console.error('[Skate Go DataService] Error creating category:', err.message);
       return { success: false, error: err.message };
     }
   }
@@ -148,7 +148,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error updating category (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error updating category (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -166,7 +166,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error toggling category visibility (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error toggling category visibility (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -197,7 +197,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error deleting category (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error deleting category (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -223,7 +223,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data: data || [] };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error fetching inventory:', err.message);
+      console.error('[Skate Go DataService] Error fetching inventory:', err.message);
       return { success: false, error: err.message, data: [] };
     }
   }
@@ -249,7 +249,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data: data || [] };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error fetching admin products:', err.message);
+      console.error('[Skate Go DataService] Error fetching admin products:', err.message);
       return { success: false, error: err.message, data: [] };
     }
   }
@@ -273,7 +273,7 @@ class SupabaseDataService {
       if (error) throw error;
       return data && data.length > 0;
     } catch (err) {
-      console.error('[Skate Lab DataService] Error checking slug exists:', err.message);
+      console.error('[Skate Go DataService] Error checking slug exists:', err.message);
       return false;
     }
   }
@@ -298,7 +298,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error updating product stock (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error updating product stock (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -316,7 +316,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error toggling product status (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error toggling product status (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -372,7 +372,7 @@ class SupabaseDataService {
 
       return { success: true, data: data || [] };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error fetching public products:', err.message);
+      console.error('[Skate Go DataService] Error fetching public products:', err.message);
       return { success: false, error: err.message, data: [] };
     }
   }
@@ -396,7 +396,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error fetching product by slug (${slug}):`, err.message);
+      console.error(`[Skate Go DataService] Error fetching product by slug (${slug}):`, err.message);
       return { success: false, error: err.message, data: null };
     }
   }
@@ -413,7 +413,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error creating product:', err.message);
+      console.error('[Skate Go DataService] Error creating product:', err.message);
       return { success: false, error: err.message };
     }
   }
@@ -436,7 +436,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error updating product (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error updating product (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -452,7 +452,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true };
     } catch (err) {
-      console.error(`[Skate Lab DataService] Error deleting product (${id}):`, err.message);
+      console.error(`[Skate Go DataService] Error deleting product (${id}):`, err.message);
       return { success: false, error: err.message };
     }
   }
@@ -475,7 +475,7 @@ class SupabaseDataService {
 
       return { success: true, url: publicUrlData.publicUrl };
     } catch (err) {
-      console.error('[Skate Lab DataService] Image upload error:', err.message);
+      console.error('[Skate Go DataService] Image upload error:', err.message);
       return { success: false, error: err.message };
     }
   }
@@ -500,7 +500,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error deleting storage image:', err.message);
+      console.error('[Skate Go DataService] Error deleting storage image:', err.message);
       return { success: false, error: err.message };
     }
   }
@@ -523,7 +523,7 @@ class SupabaseDataService {
 
       return { success: true, url: publicUrlData.publicUrl };
     } catch (err) {
-      console.error('[Skate Lab DataService] Asset upload error:', err.message);
+      console.error('[Skate Go DataService] Asset upload error:', err.message);
       return { success: false, error: err.message };
     }
   }
@@ -550,7 +550,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error creating order:', err.message);
+      console.error('[Skate Go DataService] Error creating order:', err.message);
       return { success: false, error: err.message, data: null };
     }
   }
@@ -566,7 +566,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data: data || [] };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error fetching orders:', err.message);
+      console.error('[Skate Go DataService] Error fetching orders:', err.message);
       return { success: false, error: err.message, data: [] };
     }
   }
@@ -586,12 +586,12 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error fetching store settings:', err.message);
+      console.error('[Skate Go DataService] Error fetching store settings:', err.message);
       return {
         success: false,
         error: err.message,
         data: {
-          store_name: 'Skate Lab',
+          store_name: 'Skate Go',
           store_description: 'Premium Inline Skating Accessories & Speed Equipment in India.',
           whatsapp_number: '917063062326',
           support_phone: '+91 7063062326',
@@ -611,7 +611,7 @@ class SupabaseDataService {
           hero_banner_subtitle: 'Engineered for speed, durability, and maximum agility.',
           hero_banner_cta_text: 'SHOP CATALOG',
           hero_banner_cta_link: 'shop.html',
-          seo_default_title: 'Skate Lab | Inline Skating Accessories & Speed Gear',
+          seo_default_title: 'Skate Go | Inline Skating Accessories & Speed Gear',
           seo_default_description: 'Shop high performance inline wheels, bearings, frames, and protective gear in India.',
           maintenance_mode: false
         }
@@ -637,7 +637,7 @@ class SupabaseDataService {
       if (error) throw error;
       return { success: true, data };
     } catch (err) {
-      console.error('[Skate Lab DataService] Error updating store settings:', err.message);
+      console.error('[Skate Go DataService] Error updating store settings:', err.message);
       return { success: false, error: err.message };
     }
   }

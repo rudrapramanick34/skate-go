@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Standalone Cart Page Script
+ * Skate Go - Standalone Cart Page Script
  * Renders full cart page breakdown and synchronizes actions.
  */
 

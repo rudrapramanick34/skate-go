@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Skate Lab - Supabase Schema Migration & Initial Seed Data
+-- Skate Go - Supabase Schema Migration & Initial Seed Data
 -- Module 7: Complete Product Management System (CRUD)
 -- Target Domain: Inline Skating Accessories in India
 -- ==========================================================================
@@ -116,7 +116,7 @@ CREATE INDEX IF NOT EXISTS idx_analytics_created ON public.analytics(created_at 
 -- --------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.store_settings (
     id INT PRIMARY KEY DEFAULT 1,
-    store_name TEXT DEFAULT 'Skate Lab',
+    store_name TEXT DEFAULT 'Skate Go',
     store_description TEXT DEFAULT 'Premium Inline Skating Accessories & Speed Equipment in India.',
     whatsapp_number TEXT DEFAULT '917063062326',
     support_phone TEXT DEFAULT '+91 7063062326',
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS public.store_settings (
     upi_qr_image TEXT DEFAULT 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?auto=format&fit=crop&w=400&q=80',
     store_logo TEXT DEFAULT '',
     favicon TEXT DEFAULT '',
-    seo_default_title TEXT DEFAULT 'Skate Lab | Inline Skating Accessories & Speed Gear',
+    seo_default_title TEXT DEFAULT 'Skate Go | Inline Skating Accessories & Speed Gear',
     seo_default_description TEXT DEFAULT 'Shop high performance inline wheels, bearings, frames, and protective gear in India.',
     enable_cod BOOLEAN DEFAULT true,
     enable_upi BOOLEAN DEFAULT true,

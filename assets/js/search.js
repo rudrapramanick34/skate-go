@@ -1,5 +1,5 @@
 /**
- * Skate Lab - Global Search & Multi-Faceted Filter Controller
+ * Skate Go - Global Search & Multi-Faceted Filter Controller
  * Handles query URL params, dynamic full-text search, filter execution, and analytics logging.
  */
 
