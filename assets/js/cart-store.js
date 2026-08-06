@@ -4,7 +4,7 @@
  * Uses localStorage key: 'skate_lab_cart'
  */
 
-const STORAGE_KEY = 'skate_lab_cart';
+const STORAGE_KEY = 'skate_go_cart';
 const FREE_SHIPPING_THRESHOLD = 500; // INR
 const STANDARD_SHIPPING_FEE = 60;   // INR
 
@@ -198,7 +198,7 @@ class CartStore {
    * Dispatches window event for dynamic UI updates across components
    */
   dispatchUpdate() {
-    const event = new CustomEvent('skate_lab_cart_updated', {
+    const event = new CustomEvent('skate_go_cart_updated', {
       detail: this.getCartState()
     });
     window.dispatchEvent(event);

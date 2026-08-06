@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCartDrawer();
 
   // Global event listener for cart updates
-  window.addEventListener('skate_lab_cart_updated', () => {
+  window.addEventListener('skate_go_cart_updated', () => {
     renderCartDrawer();
     updateHeaderCartBadge();
   });
