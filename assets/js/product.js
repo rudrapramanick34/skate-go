@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div style="text-align: center; padding: 4rem 1rem;">
           <h2>Product Not Found</h2>
           <p>The product you are looking for does not exist or has been removed.</p>
-          <a href="shop.html" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Back to Catalog</a>
+          <a href="shop.html" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Back to Categories</a>
         </div>
       `;
     }
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               ${product.brand ? `<div><strong>Brand:</strong> ${product.brand}</div>` : ''}
               ${product.weight ? `<div><strong>Weight:</strong> ${product.weight}</div>` : ''}
               <div><strong>Category:</strong> ${categoryName}</div>
-              <div><strong>Quality:</strong> Authentic Skate Go Spec</div>
+              <div><strong>Quality:</strong> Authentic Skate Go India</div>
             </div>
           </div>
         ` : ''}
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Loads related products from the same category or general active catalog
+ * Loads related products from the same category or general active Categories
  */
 async function loadRelatedProducts(categoryId, currentProductId) {
   const relatedGrid = document.getElementById('related-products-grid');

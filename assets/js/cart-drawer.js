@@ -161,7 +161,7 @@ function renderCartDrawer() {
         </div>
         <h3 class="cart-empty-title">YOUR GEAR BAG IS EMPTY</h3>
         <p class="cart-empty-text">Equip yourself with high-velocity inline wheels, ceramic bearings, and precision accessories.</p>
-        <a href="shop.html" class="btn btn-primary btn-full" onclick="closeCartDrawer()">EXPLORE CATALOG</a>
+        <a href="shop.html" class="btn btn-primary btn-full" onclick="closeCartDrawer()">EXPLORE Categories</a>
       </div>
     `;
     footerContainer.innerHTML = '';

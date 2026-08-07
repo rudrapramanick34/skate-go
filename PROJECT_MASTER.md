@@ -10,7 +10,7 @@ Current Module        : Module 02
 Completed             : 20%
 Status                : In Development
 Last Updated          : Module 02 Completed
-Next Module           : Module 03 - Home & Catalog Showcase Pages
+Next Module           : Module 03 - Home & Categories Showcase Pages
 Total Planned Modules : 10
 Current Phase         : Phase 1 - Architecture & Data Infrastructure
 
@@ -160,7 +160,7 @@ Supabase client initialization wrapper (assets/js/supabase.js).
 Database table schemas setup & RLS policies verification scripts (supabase-schema.sql).
 Product, Category, Order, and Analytics fetch services.
 
-Module 03: Home & Catalog Showcase Pages
+Module 03: Home & Categories Showcase Pages
 Mobile-first Home Page (index.html) featuring hero section, curated categories, high-velocity collection grid.
 Shop/Catalog Page (shop.html) with category filters, sorting options (Price, Newest), and responsive product grid.
 
@@ -214,7 +214,7 @@ Files Modified:
 PROJECT_MASTER.md
 index.html
 Next Module:
-Module 03: Home & Catalog Showcase Pages
+Module 03: Home & Categories Showcase Pages
 9. AI RULES & ABSOLUTE CONSTRAINTS
 Fundamental Directives
 Always Read First: Read PROJECT_MASTER.md before generating any file or writing any block of code.

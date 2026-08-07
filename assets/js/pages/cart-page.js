@@ -81,7 +81,7 @@ function renderCartPage() {
         </div>
         <h3 class="cart-empty-title">YOUR GEAR BAG IS EMPTY</h3>
         <p class="cart-empty-text">No accessories selected yet. Check our high-speed wheels, bearings, and protection gear.</p>
-        <a href="shop.html" class="btn btn-primary">GO TO CATALOG</a>
+        <a href="shop.html" class="btn btn-primary">GO TO Categories</a>
       </div>
     `;
     return;

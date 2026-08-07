@@ -85,7 +85,7 @@ function renderMaintenanceOverlay(s) {
   `;
 }
 
-// Fallback Accessories Catalog
+// Fallback Accessories Categories
 const FALLBACK_FEATURED = [
   {
     id: 'wh-8085a',

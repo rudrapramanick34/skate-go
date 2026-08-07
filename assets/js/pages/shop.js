@@ -1,5 +1,5 @@
 /**
- * Skate Go - Catalog Page Controller
+ * Skate Go - Categories Page Controller
  * Module 05: Dynamic Supabase Category Filtering & Stock Awareness (OUT OF STOCK Badging)
  */
 

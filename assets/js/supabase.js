@@ -609,7 +609,7 @@ class SupabaseDataService {
           announcement_bar_text: 'FREE SHIPPING IN INDIA ON ORDERS ABOVE ₹2,999',
           hero_banner_title: 'HIGH PERFORMANCE INLINE GEAR',
           hero_banner_subtitle: 'Engineered for speed, durability, and maximum agility.',
-          hero_banner_cta_text: 'SHOP CATALOG',
+          hero_banner_cta_text: 'S CATALOGHOP',
           hero_banner_cta_link: 'shop.html',
           seo_default_title: 'Skate Go | Inline Skating Accessories & Speed Gear',
           seo_default_description: 'Shop high performance inline wheels, bearings, frames, and protective gear in India.',

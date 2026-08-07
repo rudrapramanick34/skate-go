@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function verifyCartNotEmpty() {
   const count = window.cartStore ? window.cartStore.getItemCount() : 0;
   if (count === 0) {
-    alert('Your gear bag is empty. Redirecting to catalog...');
+    alert('Your gear bag is empty. Redirecting to Categories...');
     window.location.href = 'shop.html';
   }
 }
