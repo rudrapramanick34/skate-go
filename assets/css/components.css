@@ -15,7 +15,7 @@
   text-transform: uppercase;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid transparent;
   text-decoration: none;
   min-height: 48px;
@@ -30,7 +30,7 @@
 .btn-primary:hover {
   background-color: #d00032;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(238, 0, 57, 0.35);
+  box-shadow: 0 8px 24px rgba(238, 0, 57, 0.4);
 }
 
 .btn-outline {
@@ -43,6 +43,7 @@
   border-color: var(--color-primary, #EE0039);
   color: var(--color-primary, #EE0039);
   background-color: rgba(238, 0, 57, 0.08);
+  transform: translateY(-2px);
 }
 
 .btn-full {
@@ -61,6 +62,18 @@
   font-size: 0.775rem;
 }
 
+/* Keyframe Animations for Hero Entrance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Hero Section */
 .hero-section {
   padding: 4.5rem 0 3.5rem;
@@ -76,6 +89,7 @@
   text-transform: uppercase;
   margin-bottom: 0.75rem;
   display: block;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
 }
 
 .hero-title {
@@ -84,6 +98,7 @@
   letter-spacing: 0.02em;
   color: var(--color-text-main, #ffffff);
   margin-bottom: 1rem;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 }
 
 @media (min-width: 768px) {
@@ -98,6 +113,7 @@
   max-width: 620px;
   margin: 0 auto 2rem;
   line-height: 1.6;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
 
 .hero-cta-group {
@@ -105,6 +121,7 @@
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
 }
 
 @media (max-width: 480px) {
@@ -116,7 +133,8 @@
 /* Shipping Banner */
 .shipping-banner {
   background-color: #121212;
-  border-y: 1px solid var(--color-card-border);
+  border-top: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-card-border);
   padding: 0.9rem 0;
   margin-bottom: 2.5rem;
 }
@@ -136,12 +154,36 @@
   font-size: 0.8rem;
   color: var(--color-text-main);
   letter-spacing: 0.03em;
+  transition: transform 0.25s ease;
+}
+
+.shipping-banner-item:hover {
+  transform: translateY(-2px);
 }
 
 .shipping-banner-item svg {
   color: var(--color-primary);
   flex-shrink: 0;
 }
+
+/* Scroll Reveal Classes */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger animation for grid cards */
+.reveal-on-scroll:nth-child(1) { transition-delay: 0.05s; }
+.reveal-on-scroll:nth-child(2) { transition-delay: 0.12s; }
+.reveal-on-scroll:nth-child(3) { transition-delay: 0.19s; }
+.reveal-on-scroll:nth-child(4) { transition-delay: 0.26s; }
 
 /* Section Common Layout */
 .home-section {
@@ -187,11 +229,13 @@
   font-size: 0.875rem;
   font-weight: 800;
   letter-spacing: 0.05em;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  display: inline-block;
 }
 
 .link-action:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  transform: translateX(4px);
 }
 
 /* Product Cards Grid */
@@ -227,13 +271,14 @@
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
   position: relative;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: var(--color-primary, #EE0039);
+  box-shadow: 0 12px 30px rgba(238, 0, 57, 0.12);
 }
 
 .category-card-badge {
@@ -271,11 +316,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .product-card:hover .product-card-img {
-  transform: scale(1.05);
+  transform: scale(1.07);
 }
 
 .product-badge {
@@ -341,7 +386,8 @@
 /* Why Choose Skate Go Grid */
 .why-choose-section {
   background-color: #0E0E0E;
-  border-y: 1px solid var(--color-card-border);
+  border-top: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-card-border);
   padding: 4rem 0;
   margin: 2rem 0;
 }
@@ -370,11 +416,13 @@
   border: 1px solid var(--color-card-border);
   padding: 1.5rem;
   border-radius: 12px;
-  transition: border-color 0.2s;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature-card:hover {
+  transform: translateY(-5px);
   border-color: var(--color-primary);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 .feature-icon {
@@ -387,6 +435,12 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.08);
+  background-color: rgba(238, 0, 57, 0.2);
 }
 
 .feature-title {
@@ -523,7 +577,28 @@
 
 .whatsapp-btn:hover {
   background-color: #20bd5a;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-subtitle,
+  .hero-title,
+  .hero-description,
+  .hero-cta-group {
+    animation: none !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .product-card,
+  .feature-card,
+  .btn,
+  .shipping-banner-item {
+    transition: none !important;
+  }
 }
 
 /* ==========================================================================

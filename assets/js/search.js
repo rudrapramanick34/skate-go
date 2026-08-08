@@ -1,66 +1,7 @@
 /**
  * Skate Go - Global Search & Multi-Faceted Filter Controller
- * Handles query URL params, dynamic full-text search, filter execution, and analytics logging.
+ * Handles URL query parameters, Supabase product fetching, filtering, sorting, and analytics logging.
  */
-
-// Fallback high-performance catalog items if Supabase is initializing or offline
-const MOCK_SEARCH_CATALOG = [
-  {
-    id: "p1",
-    title: "Atom Matrix 80mm/86A Inline Wheels (8 Pack)",
-    slug: "atom-matrix-80mm-wheels",
-    category: "wheels",
-    category_name: "Inline Wheels",
-    price: 3499,
-    diameter: "80mm",
-    images: ["assets/images/placeholder-gear.jpg"],
-    description: "High rebound premium urethane wheels engineered for indoor and outdoor velocity."
-  },
-  {
-    id: "p2",
-    title: "Wicked Swiss Ceramic Precision Bearings (16 Pack)",
-    slug: "wicked-swiss-ceramic-bearings",
-    category: "bearings",
-    category_name: "Bearings & Speed Kits",
-    price: 4999,
-    diameter: null,
-    images: ["assets/images/placeholder-gear.jpg"],
-    description: "Ultra-low friction ceramic balls in silicon-treated cages for maximum speed durability."
-  },
-  {
-    id: "p3",
-    title: "Powerslide Trinity 3x110 CNC Aluminium Frame",
-    slug: "powerslide-trinity-3x110-frame",
-    category: "frames",
-    category_name: "Frames & Chassis",
-    price: 8999,
-    diameter: "110mm",
-    images: ["assets/images/placeholder-gear.jpg"],
-    description: "Aircraft-grade extruded aluminium frame with 3-point Trinity mounting system."
-  },
-  {
-    id: "p4",
-    title: "Ennui City Brace Anatomic Wrist Guard",
-    slug: "ennui-city-brace-wrist-guard",
-    category: "protective",
-    category_name: "Protective Gear",
-    price: 2799,
-    diameter: null,
-    images: ["assets/images/placeholder-gear.jpg"],
-    description: "Full leather palm with dual aluminum splints for elite wrist protection."
-  },
-  {
-    id: "p5",
-    title: "Sonic Pro Inline Skate Tool Kit",
-    slug: "sonic-pro-inline-skate-tool",
-    category: "maintenance",
-    category_name: "Maintenance & Tools",
-    price: 1299,
-    diameter: null,
-    images: ["assets/images/placeholder-gear.jpg"],
-    description: "Precision 4mm Allen key, bearing pusher, axle extractor, and spacer aligner."
-  }
-];
 
 class SearchEngine {
   constructor() {
@@ -85,18 +26,39 @@ class SearchEngine {
 
   async loadCatalog() {
     try {
-      if (window.supabaseClient) {
-        const { data, error } = await window.supabaseClient.from('products').select('*');
-        if (!error && data && data.length > 0) {
-          this.catalog = data;
-          return;
+      // Resolve the Supabase client via existing window.dbService or window.supabaseClient
+      let client = window.supabaseClient;
+      if (!client && window.dbService && typeof window.dbService.getClient === 'function') {
+        client = await window.dbService.getClient();
+      }
+
+      if (client) {
+        const { data, error } = await client
+          .from('products')
+          .select(`
+            *,
+            categories:category_id (
+              id,
+              name,
+              slug
+            )
+          `)
+          .eq('is_active', true);
+
+        if (error) {
+          console.error('[Skate Go Search] Supabase fetch error:', error);
+          this.catalog = [];
+        } else {
+          this.catalog = data || [];
         }
+      } else {
+        console.warn('[Skate Go Search] Supabase client could not be initialized.');
+        this.catalog = [];
       }
     } catch (e) {
-      console.warn('Supabase search fetch warning:', e);
+      console.error('[Skate Go Search] Unexpected error during catalog fetch:', e);
+      this.catalog = [];
     }
-    // Fallback if DB empty or initializing
-    this.catalog = MOCK_SEARCH_CATALOG;
   }
 
   bindEvents() {
@@ -107,13 +69,13 @@ class SearchEngine {
     // Live search input
     input?.addEventListener('input', (e) => {
       this.currentQuery = e.target.value.trim();
-      clearBtn.style.display = this.currentQuery.length > 0 ? 'flex' : 'none';
+      if (clearBtn) clearBtn.style.display = this.currentQuery.length > 0 ? 'flex' : 'none';
       this.executeSearch();
     });
 
     // Clear search button
     clearBtn?.addEventListener('click', () => {
-      input.value = '';
+      if (input) input.value = '';
       this.currentQuery = '';
       clearBtn.style.display = 'none';
       this.executeSearch();
@@ -123,10 +85,10 @@ class SearchEngine {
     document.querySelectorAll('.tag-pill').forEach(pill => {
       pill.addEventListener('click', () => {
         const tag = pill.getAttribute('data-tag');
-        if (input) {
+        if (input && tag) {
           input.value = tag;
           this.currentQuery = tag;
-          clearBtn.style.display = 'flex';
+          if (clearBtn) clearBtn.style.display = 'flex';
           this.executeSearch();
         }
       });
@@ -164,12 +126,12 @@ class SearchEngine {
 
     // Price Inputs
     document.getElementById('min-price-input')?.addEventListener('input', (e) => {
-      this.minPrice = e.target.value ? Number(e.target.value) : null;
+      this.minPrice = e.target.value !== '' ? Number(e.target.value) : null;
       this.executeSearch();
     });
 
     document.getElementById('max-price-input')?.addEventListener('input', (e) => {
-      this.maxPrice = e.target.value ? Number(e.target.value) : null;
+      this.maxPrice = e.target.value !== '' ? Number(e.target.value) : null;
       this.executeSearch();
     });
 
@@ -183,10 +145,10 @@ class SearchEngine {
     const params = new URLSearchParams(window.location.search);
     const query = params.get('q');
     if (query) {
-      this.currentQuery = query;
+      this.currentQuery = query.trim();
       const input = document.getElementById('global-search-input');
       const clearBtn = document.getElementById('clear-search-btn');
-      if (input) input.value = query;
+      if (input) input.value = this.currentQuery;
       if (clearBtn) clearBtn.style.display = 'flex';
     }
   }
@@ -194,42 +156,64 @@ class SearchEngine {
   executeSearch() {
     let results = [...this.catalog];
 
-    // 1. Query Matching
+    // 1. Text Search Matching (Title, Description, Category Name, Slug)
     if (this.currentQuery) {
       const q = this.currentQuery.toLowerCase();
-      results = results.filter(item => 
-        item.title.toLowerCase().includes(q) ||
-        (item.description && item.description.toLowerCase().includes(q)) ||
-        (item.category_name && item.category_name.toLowerCase().includes(q))
-      );
+      results = results.filter(item => {
+        const titleMatch = item.title && item.title.toLowerCase().includes(q);
+        const descMatch = item.description && item.description.toLowerCase().includes(q);
+        const catMatch = item.categories?.name && item.categories.name.toLowerCase().includes(q);
+        const catSlugMatch = item.categories?.slug && item.categories.slug.toLowerCase().includes(q);
+        const directCatMatch = item.category && item.category.toLowerCase().includes(q);
+        const slugMatch = item.slug && item.slug.toLowerCase().includes(q);
 
-      // Dispatch search analytics event
+        return titleMatch || descMatch || catMatch || catSlugMatch || directCatMatch || slugMatch;
+      });
+
       this.logSearchAnalytics(this.currentQuery, results.length);
     }
 
     // 2. Category Filter
     if (this.selectedCategories.length > 0) {
-      results = results.filter(item => this.selectedCategories.includes(item.category));
+      results = results.filter(item => {
+        const itemCatSlug = (item.categories?.slug || item.category || '').toLowerCase();
+        const itemCatName = (item.categories?.name || item.category_name || '').toLowerCase();
+        return this.selectedCategories.some(sc => {
+          const target = sc.toLowerCase();
+          return itemCatSlug.includes(target) || itemCatName.includes(target);
+        });
+      });
     }
 
     // 3. Diameter Filter
     if (this.selectedDiameters.length > 0) {
-      results = results.filter(item => item.diameter && this.selectedDiameters.includes(item.diameter));
+      results = results.filter(item => {
+        const diam = item.diameter ? String(item.diameter).toLowerCase() : '';
+        const title = (item.title || '').toLowerCase();
+        const desc = (item.description || '').toLowerCase();
+
+        return this.selectedDiameters.some(d => {
+          const cleanD = d.toLowerCase().replace('mm', '');
+          return diam.includes(cleanD) || title.includes(d.toLowerCase()) || title.includes(cleanD + 'mm') || desc.includes(d.toLowerCase());
+        });
+      });
     }
 
     // 4. Price Filter
-    if (this.minPrice !== null) {
-      results = results.filter(item => item.price >= this.minPrice);
+    if (this.minPrice !== null && !isNaN(this.minPrice)) {
+      results = results.filter(item => typeof item.price === 'number' && item.price >= this.minPrice);
     }
-    if (this.maxPrice !== null) {
-      results = results.filter(item => item.price <= this.maxPrice);
+    if (this.maxPrice !== null && !isNaN(this.maxPrice)) {
+      results = results.filter(item => typeof item.price === 'number' && item.price <= this.maxPrice);
     }
 
     // 5. Sorting
     if (this.sortBy === 'price-asc') {
-      results.sort((a, b) => a.price - b.price);
+      results.sort((a, b) => (a.price || 0) - (b.price || 0));
     } else if (this.sortBy === 'price-desc') {
-      results.sort((a, b) => b.price - a.price);
+      results.sort((a, b) => (b.price || 0) - (a.price || 0));
+    } else if (this.sortBy === 'newest') {
+      results.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
     }
 
     this.filteredResults = results;
@@ -252,46 +236,66 @@ class SearchEngine {
     if (grid) grid.style.display = 'grid';
     if (emptyState) emptyState.style.display = 'none';
 
-    grid.innerHTML = this.filteredResults.map(product => `
-      <article class="search-card">
-        <div class="search-card-img-wrap">
-          <img src="${product.images?.[0] || 'assets/images/placeholder-gear.jpg'}" alt="${product.title}" class="search-card-img" loading="lazy" />
-        </div>
-        <div class="search-card-content">
-          <div>
-            <span class="search-card-cat">${product.category_name || product.category}</span>
-            <h3 class="search-card-title">${product.title}</h3>
+    grid.innerHTML = this.filteredResults.map(product => {
+      let mainImg = 'assets/images/placeholder-gear.jpg';
+      if (Array.isArray(product.images) && product.images.length > 0 && product.images[0]) {
+        mainImg = product.images[0];
+      } else if (typeof product.image === 'string' && product.image.trim() !== '') {
+        mainImg = product.image;
+      }
+
+      const categoryLabel = product.categories?.name || product.category_name || product.category || '';
+      const productLink = product.slug ? `product.html?slug=${product.slug}` : `product.html?id=${product.id}`;
+
+      return `
+        <article class="search-card">
+          <div class="search-card-img-wrap">
+            <img src="${mainImg}" alt="${product.title || 'Product'}" class="search-card-img" loading="lazy" />
           </div>
-          <div>
-            <div class="search-card-price">₹${product.price.toLocaleString('en-IN')}</div>
-            <a href="product.html?id=${product.id}" class="btn btn-primary btn-full btn-sm">VIEW GEAR</a>
+          <div class="search-card-content">
+            <div>
+              <span class="search-card-cat">${categoryLabel}</span>
+              <h3 class="search-card-title">${product.title || ''}</h3>
+            </div>
+            <div>
+              <div class="search-card-price">₹${Number(product.price || 0).toLocaleString('en-IN')}</div>
+              <a href="${productLink}" class="btn btn-primary btn-full btn-sm">VIEW GEAR</a>
+            </div>
           </div>
-        </div>
-      </article>
-    `).join('');
+        </article>
+      `;
+    }).join('');
   }
 
   resetAllFilters() {
     document.querySelectorAll('#category-filters input, #diameter-filters input').forEach(cb => cb.checked = false);
-    document.getElementById('min-price-input').value = '';
-    document.getElementById('max-price-input').value = '';
-    
+    const minInput = document.getElementById('min-price-input');
+    const maxInput = document.getElementById('max-price-input');
+    if (minInput) minInput.value = '';
+    if (maxInput) maxInput.value = '';
+
     this.selectedCategories = [];
     this.selectedDiameters = [];
     this.minPrice = null;
     this.maxPrice = null;
-    
+
     this.executeSearch();
   }
 
   async logSearchAnalytics(query, resultCount) {
-    if (!window.supabaseClient || !query) return;
+    if (!query) return;
     try {
-      await window.supabaseClient.from('analytics').insert([{
-        event_type: 'search_query',
-        metadata: { query, result_count: resultCount },
-        created_at: new Date().toISOString()
-      }]);
+      let client = window.supabaseClient;
+      if (!client && window.dbService && typeof window.dbService.getClient === 'function') {
+        client = await window.dbService.getClient();
+      }
+      if (client) {
+        await client.from('analytics').insert([{
+          event_type: 'search_query',
+          metadata: { query, result_count: resultCount },
+          created_at: new Date().toISOString()
+        }]);
+      }
     } catch (err) {
       // Non-blocking background analytics
     }

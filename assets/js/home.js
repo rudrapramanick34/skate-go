@@ -1,15 +1,43 @@
 /**
  * Skate Go - Home Page Controller
- * Module 10: Dynamic Store Announcement, Hero Banner, & Maintenance Mode Integration
+ * Module 10: Dynamic Store Announcement, Hero Banner, Scroll Reveal & Maintenance Integration
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
+  initScrollReveal();
   await checkMaintenanceAndHydrateStore();
   await loadFeaturedProducts();
 });
 
 /**
- * Section 7: Maintenance Mode Check & Section 5: Dynamic Homepage Hydration
+ * Scroll Reveal Animation Observer
+ */
+function initScrollReveal() {
+  const targets = document.querySelectorAll('.shipping-banner, .feature-card, .why-choose-section, .about-preview-box, .faq-accordion, .whatsapp-cta-card');
+  
+  targets.forEach(el => el.classList.add('reveal-on-scroll'));
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -30px 0px'
+    });
+
+    targets.forEach(el => observer.observe(el));
+  } else {
+    targets.forEach(el => el.classList.add('is-visible'));
+  }
+}
+
+/**
+ * Maintenance Mode Check & Dynamic Homepage Hydration
  */
 async function checkMaintenanceAndHydrateStore() {
   if (!window.dbService) return;
@@ -64,7 +92,7 @@ async function checkMaintenanceAndHydrateStore() {
 }
 
 /**
- * SECTION 7: Professional Maintenance Overlay Screen
+ * Maintenance Overlay Screen
  */
 function renderMaintenanceOverlay(s) {
   document.body.innerHTML = `
@@ -134,7 +162,7 @@ async function loadFeaturedProducts() {
 }
 
 function renderProductGrid(container, products) {
-  container.innerHTML = products.map(product => {
+  container.innerHTML = products.map((product, index) => {
     const imageUrl = (product.images && product.images[0]) 
       ? product.images[0] 
       : 'https://images.unsplash.com/photo-1547447134-cd3f5c716030?q=80&w=600&auto=format&fit=crop';
@@ -142,7 +170,7 @@ function renderProductGrid(container, products) {
     const categoryLabel = product.category_name || (product.categories ? product.categories.name : 'Inline Gear');
 
     return `
-      <div class="product-card">
+      <div class="product-card reveal-on-scroll" style="transition-delay: ${0.05 * (index + 1)}s">
         <a href="product.html?slug=${product.slug || product.id}" class="product-card-image-wrapper">
           <img src="${imageUrl}" alt="${product.title}" loading="lazy" class="product-card-img" />
           <span class="product-badge">${categoryLabel}</span>
@@ -165,6 +193,22 @@ function renderProductGrid(container, products) {
       </div>
     `;
   }).join('');
+
+  // Observe newly injected product cards for scroll reveal
+  if ('IntersectionObserver' in window) {
+    const cardObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    container.querySelectorAll('.product-card').forEach(card => cardObserver.observe(card));
+  } else {
+    container.querySelectorAll('.product-card').forEach(card => card.classList.add('is-visible'));
+  }
 
   container.querySelectorAll('.quick-add-btn').forEach(button => {
     button.addEventListener('click', (e) => {

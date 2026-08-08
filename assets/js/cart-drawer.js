@@ -19,7 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function injectCartDrawerMarkup() {
-  if (document.getElementById('cart-drawer-overlay')) return;
+  if (document.getElementById('cart-drawer-overlay') && document.getElementById('cart-drawer')) return;
+
+  // Remove broken/legacy overlay container if present without cart-drawer
+  const legacyOverlay = document.getElementById('cart-drawer-overlay');
+  if (legacyOverlay && !document.getElementById('cart-drawer')) {
+    legacyOverlay.remove();
+  }
 
   const drawerHTML = `
     <div id="cart-drawer-overlay" class="cart-drawer-overlay" aria-hidden="true"></div>

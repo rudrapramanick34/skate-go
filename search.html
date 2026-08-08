@@ -14,29 +14,61 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- SITE HEADER -->
   <header class="site-header">
     <div class="header-inner container">
       <a href="index.html" class="brand-logo" aria-label="Skate Go Home">
-        <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        <span class="logo-text">SKATE<span class="logo-accent">GO</span></span>
       </a>
+
+      <!-- Desktop Navigation -->
       <nav class="nav-desktop">
         <a href="index.html" class="nav-link">Home</a>
-        <a href="shop.html" class="nav-link">Catalog</a>
-        <a href="search.html" class="nav-link active">Search</a>
+        <a href="shop.html" class="nav-link">Categories</a>
+        <a href="search.html" class="nav-link active">Search Gear</a>
+        <a href="legal/about.html" class="nav-link">About Us</a>
+        <a href="legal/contact.html" class="nav-link">Support</a>
       </nav>
+
+      <!-- Header Action Buttons -->
       <div class="header-actions">
-        <button class="cart-icon-btn" data-action="open-cart" aria-label="View Shopping Cart">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="cart-icon-btn" id="cart-toggle-btn" data-action="open-cart" aria-label="View Shopping Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-          <span class="cart-count-badge">0</span>
+          <span class="cart-count-badge" id="cart-count">0</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </button>
       </div>
     </div>
   </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-header">
+      <span class="logo-text">SKATE<span class="logo-accent">GO</span></span>
+      <button id="mobile-nav-close" class="close-btn" aria-label="Close Menu">&times;</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link">Categories</a>
+      <a href="search.html" class="mobile-nav-link active">Search Gear</a>
+      <a href="legal/about.html" class="mobile-nav-link">About Us</a>
+      <a href="legal/contact.html" class="mobile-nav-link">Customer Support</a>
+      <a href="legal/shipping-policy.html" class="mobile-nav-link">Shipping Policy</a>
+    </nav>
+  </div>
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
 
   <!-- MAIN CONTENT -->
   <main class="search-page-main container">
@@ -206,6 +238,7 @@
   </footer>
 
   <!-- JS Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/supabase.js"></script>
   <script src="assets/js/cart-store.js"></script>
   <script src="assets/js/cart-drawer.js"></script>

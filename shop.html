@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categories | Skate Go</title>
+  <title>Categories | Skate Go India</title>
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/header-footer.css">
@@ -96,9 +96,18 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="shop.html" class="nav-link active">Categories</a>
         <a href="search.html" class="nav-link">Search Gear</a>
+        <a href="legal/about.html" class="nav-link">About Us</a>
+        <a href="legal/contact.html" class="nav-link">Support</a>
       </nav>
 
       <div class="header-actions">
+        <a href="search.html" class="cart-icon-btn" aria-label="Search Categories">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
         <button class="cart-icon-btn" id="cart-toggle-btn" data-action="open-cart" aria-label="View Cart">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -107,31 +116,39 @@
           </svg>
           <span class="cart-count-badge" id="cart-count">0</span>
         </button>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- CART DRAWER OVERLAY -->
-  <div id="cart-drawer-overlay" class="cart-drawer-overlay">
-    <div class="cart-drawer">
-      <div class="cart-drawer-header">
-        <h2>Your Gear Bag</h2>
-        <button id="cart-close-btn" class="close-btn" aria-label="Close Cart">&times;</button>
-      </div>
-      <div id="cart-drawer-items" class="cart-drawer-items"></div>
-      <div class="cart-drawer-footer">
-        <div class="subtotal-row">
-          <span>Subtotal:</span>
-          <span id="cart-drawer-subtotal">₹0</span>
-        </div>
-        <a href="checkout.html" class="btn btn-primary btn-full">Proceed to Checkout</a>
-      </div>
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-nav-header">
+      <span class="logo-text">SKATE<span class="logo-accent">GO</span></span>
+      <button id="mobile-nav-close" class="close-btn" aria-label="Close Menu">&times;</button>
     </div>
+    <nav class="mobile-nav-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
+      <a href="shop.html" class="mobile-nav-link active">Categories</a>
+      <a href="search.html" class="mobile-nav-link">Search Gear</a>
+      <a href="legal/about.html" class="mobile-nav-link">About Us</a>
+      <a href="legal/contact.html" class="mobile-nav-link">Customer Support</a>
+      <a href="legal/shipping-policy.html" class="mobile-nav-link">Shipping Policy</a>
+    </nav>
   </div>
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay"></div>
 
   <main class="catalog-container">
     <div class="catalog-header">
-      <h1 class="catalog-title">Precision Hardware Catalog</h1>
+      <h1 class="catalog-title">Precision Hardware Categories</h1>
       <p class="catalog-subtitle">High-rebound wheels, ceramic bearings, CNC aluminum chassis, and protective gear.</p>
     </div>
 
