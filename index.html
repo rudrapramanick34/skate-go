@@ -6,10 +6,17 @@
   <title>Skate Go | Precision Inline Skating Hardware India</title>
   <meta name="description" content="India's premier high-performance inline skating store. Ultra-high rebound urethane wheels, silicon nitride ceramic bearings, and CNC aluminum 7000 frames.">
 
+  <!-- Prevent Theme Flash (FOUT) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('skate_go_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
   <!-- CSS Dependencies -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/header-footer.css">
 </head>
 <body>
 
@@ -25,12 +32,27 @@
         <a href="index.html" class="nav-link active">Home</a>
         <a href="shop.html" class="nav-link">Categories</a>
         <a href="search.html" class="nav-link">Search Gear</a>
-        <a href="legal/about.html" class="nav-link">About US</a>
+        <a href="legal/about.html" class="nav-link">About Us</a>
         <a href="legal/contact.html" class="nav-link">Support</a>
       </nav>
 
       <!-- Action Icons -->
       <div class="header-actions">
+        <!-- Theme Switcher Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Dark/Light Theme" title="Toggle Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
         <a href="search.html" class="cart-icon-btn" aria-label="Search Categories">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
@@ -47,7 +69,6 @@
           <span class="cart-count-badge" id="cart-count">0</span>
         </button>
 
-        <!-- Mobile Menu Hamburger Button -->
         <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -88,8 +109,8 @@
           High-rebound urethane wheels, silicon nitride ceramic bearings, and 7000-series aluminum frames forged for serious inline skaters across India.
         </p>
         <div class="hero-cta-group">
-      <a href="legal/contact.html" class="btn btn-outline btn-lg">SUPPORT</a>
-          <a href="shop.html" class="btn btn-primary btn-lg">EXPLORE Categories</a>
+          <a href="legal/contact.html" class="btn btn-outline btn-lg">SUPPORT</a>
+          <a href="shop.html" class="btn btn-primary btn-lg">EXPLORE CATEGORIES</a>
           <a href="shop.html?category=wheels" class="btn btn-outline btn-lg">PRO WHEELS</a>
         </div>
       </div>
@@ -122,8 +143,7 @@
       </div>
     </section>
 
-
-    <!-- 4. DYNAMIC FEATURED PRODUCTS -->
+    <!-- 3. FEATURED PRODUCTS -->
     <section class="home-section container">
       <div class="section-header flex-header">
         <div>
@@ -138,7 +158,7 @@
       </div>
     </section>
 
-    <!-- 5. WHY CHOOSE Skate Go -->
+    <!-- 4. WHY CHOOSE Skate Go -->
     <section class="why-choose-section">
       <div class="container">
         <div class="section-header text-center">
@@ -155,8 +175,6 @@
                 <circle cx="12" cy="12" r="4"></circle>
                 <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
                 <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
-                <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
-                <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
               </svg>
             </div>
             <h3 class="feature-title">High-Rebound Urethane</h3>
@@ -198,7 +216,7 @@
       </div>
     </section>
 
-    <!-- 6. ABOUT PREVIEW SECTION -->
+    <!-- 5. ABOUT PREVIEW SECTION -->
     <section class="home-section container">
       <div class="about-preview-box">
         <div class="about-preview-content">
@@ -212,7 +230,7 @@
       </div>
     </section>
 
-    <!-- 7. FAQ PREVIEW SECTION -->
+    <!-- 6. FAQ PREVIEW SECTION -->
     <section class="home-section container">
       <div class="section-header text-center">
         <span class="section-tag">TECHNICAL HELP</span>
@@ -244,14 +262,14 @@
       </div>
     </section>
 
-    <!-- 8. WHATSAPP CTA SECTION -->
+    <!-- 7. WHATSAPP CTA SECTION -->
     <section class="whatsapp-cta-section container">
       <div class="whatsapp-cta-card">
         <div class="whatsapp-cta-info">
           <h2 class="whatsapp-cta-title">NEED TECHNICAL FITMENT ASSISTANCE?</h2>
           <p class="whatsapp-cta-text">Unsure about bearing tolerances, wheel diameters, or frame mounting pitch? Speak directly with our technicians.</p>
         </div>
-        <a href="https://wa.me/917063062326?text=Hi%20Skate%20go,%20I%20need%20technical%20assistance%20with%20inline%20accessories." target="_blank" rel="noopener" class="btn btn-primary btn-lg whatsapp-btn">
+        <a href="https://wa.me/917063062326?text=Hi%20Skate%20Go,%20I%20need%20technical%20assistance%20with%20inline%20accessories." target="_blank" rel="noopener" class="btn btn-primary btn-lg whatsapp-btn">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
           </svg>

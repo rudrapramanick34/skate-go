@@ -1,9 +1,10 @@
 /**
- * Skate Go - Dynamic Cart Drawer & Navigation Controller
- * Handles cart overlay injection, slide-over navigation, dynamic rendering, and event bindings.
+ * Skate Go - Dynamic Cart Drawer & Site-Wide Theme Switcher
+ * Handles cart overlay injection, theme switching persistence, slide-over navigation, and event bindings.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeSwitcher();
   injectCartDrawerMarkup();
   bindCartDrawerEvents();
   bindMobileNavEvents();
@@ -18,10 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHeaderCartBadge();
 });
 
+/**
+ * Site-Wide Theme Switcher Controller
+ */
+function initThemeSwitcher() {
+  const currentTheme = localStorage.getItem('skate_go_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  document.querySelectorAll('#theme-toggle-btn, .theme-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const activeTheme = document.documentElement.getAttribute('data-theme');
+      const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('skate_go_theme', nextTheme);
+    });
+  });
+}
+
 function injectCartDrawerMarkup() {
   if (document.getElementById('cart-drawer-overlay') && document.getElementById('cart-drawer')) return;
 
-  // Remove broken/legacy overlay container if present without cart-drawer
   const legacyOverlay = document.getElementById('cart-drawer-overlay');
   if (legacyOverlay && !document.getElementById('cart-drawer')) {
     legacyOverlay.remove();
@@ -143,11 +161,11 @@ function renderCartDrawer() {
       trackerContainer.innerHTML = `
         <div class="shipping-progress-info">
           ${prog.isUnlocked 
-            ? '<span class="shipping-status unlocked">⚡ FREE SHIPPING UNLOCKED!</span>' 
-            : `<span class="shipping-status">Add <strong class="highlight">₹${prog.remaining}</strong> more for <strong>FREE Shipping</strong></span>`
+            ? '<span class="shipping-status unlocked" style="color:var(--color-success); font-weight:800;">⚡ FREE SHIPPING UNLOCKED!</span>' 
+            : `<span class="shipping-status">Add <strong style="color:var(--color-primary)">₹${prog.remaining}</strong> more for <strong>FREE Shipping</strong></span>`
           }
         </div>
-        <div class="shipping-progress-bar-bg">
+        <div class="shipping-progress-bar-bg" style="margin-top:0.4rem;">
           <div class="shipping-progress-bar-fill" style="width: ${prog.percentage}%"></div>
         </div>
       `;
@@ -157,17 +175,17 @@ function renderCartDrawer() {
   // 2. Empty State
   if (state.items.length === 0) {
     itemsContainer.innerHTML = `
-      <div class="cart-empty-state">
-        <div class="cart-empty-icon">
+      <div class="cart-empty-state" style="text-align:center; padding: 3rem 1rem;">
+        <div class="cart-empty-icon" style="color: var(--color-text-secondary); margin-bottom: 1rem; opacity: 0.5;">
           <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
           </svg>
         </div>
-        <h3 class="cart-empty-title">YOUR GEAR BAG IS EMPTY</h3>
-        <p class="cart-empty-text">Equip yourself with high-velocity inline wheels, ceramic bearings, and precision accessories.</p>
-        <a href="shop.html" class="btn btn-primary btn-full" onclick="closeCartDrawer()">EXPLORE Categories</a>
+        <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem;">YOUR GEAR BAG IS EMPTY</h3>
+        <p style="font-size:0.85rem; color:var(--color-text-secondary); margin-bottom:1.5rem;">Equip yourself with high-velocity inline wheels, ceramic bearings, and precision accessories.</p>
+        <a href="shop.html" class="btn btn-primary btn-full" onclick="closeCartDrawer()">EXPLORE CATEGORIES</a>
       </div>
     `;
     footerContainer.innerHTML = '';
@@ -180,19 +198,19 @@ function renderCartDrawer() {
       <div class="cart-item-img-wrap">
         <img src="${item.image || 'assets/images/placeholder-gear.jpg'}" alt="${item.title}" class="cart-item-img" loading="lazy" />
       </div>
-      <div class="cart-item-details">
+      <div class="cart-item-details" style="flex-grow:1;">
         <h4 class="cart-item-title">${item.title}</h4>
-        <div class="cart-item-price-row">
+        <div class="cart-item-price-row" style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
           <span class="cart-item-price">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
-          <span class="cart-item-unit-price">(₹${item.price.toLocaleString('en-IN')} each)</span>
+          <span style="font-size:0.75rem; color:var(--color-text-secondary);">(₹${item.price.toLocaleString('en-IN')} each)</span>
         </div>
-        <div class="cart-item-actions">
-          <div class="quantity-control-sm">
-            <button class="qty-btn-sm" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity - 1})" aria-label="Decrease quantity">-</button>
-            <span class="qty-val-sm">${item.quantity}</span>
-            <button class="qty-btn-sm" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity + 1})" aria-label="Increase quantity">+</button>
+        <div class="cart-item-actions" style="display:flex; align-items:center; justify-content:space-between;">
+          <div class="quantity-control-sm" style="display:inline-flex; align-items:center; border:1px solid var(--color-card-border); border-radius:6px;">
+            <button style="background:none; border:none; color:var(--color-text-main); width:28px; height:28px; cursor:pointer; font-weight:800;" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity - 1})" aria-label="Decrease quantity">-</button>
+            <span style="font-size:0.8rem; font-weight:800; padding:0 0.5rem;">${item.quantity}</span>
+            <button style="background:none; border:none; color:var(--color-text-main); width:28px; height:28px; cursor:pointer; font-weight:800;" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity + 1})" aria-label="Increase quantity">+</button>
           </div>
-          <button class="cart-item-remove-btn" onclick="window.cartStore.removeItem('${item.itemKey}')" aria-label="Remove item">
+          <button style="background:none; border:none; color:var(--color-text-secondary); cursor:pointer;" onclick="window.cartStore.removeItem('${item.itemKey}')" aria-label="Remove item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="3 6 5 6 21 6"></polyline>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -206,20 +224,20 @@ function renderCartDrawer() {
   // 4. Render Footer Summary
   footerContainer.innerHTML = `
     <div class="cart-summary-row">
-      <span class="summary-label">Subtotal</span>
-      <span class="summary-value">₹${state.subtotal.toLocaleString('en-IN')}</span>
+      <span>Subtotal</span>
+      <span>₹${state.subtotal.toLocaleString('en-IN')}</span>
     </div>
     <div class="cart-summary-row">
-      <span class="summary-label">Estimated Delivery</span>
-      <span class="summary-value ${state.shippingFee === 0 ? 'text-accent' : ''}">
+      <span>Estimated Delivery</span>
+      <span class="${state.shippingFee === 0 ? 'text-accent' : ''}">
         ${state.shippingFee === 0 ? 'FREE' : `₹${state.shippingFee}`}
       </span>
     </div>
     <div class="cart-summary-row total-row">
-      <span class="summary-label">Estimated Total</span>
+      <span>Estimated Total</span>
       <span class="summary-value-total">₹${state.total.toLocaleString('en-IN')}</span>
     </div>
-    <p class="cart-drawer-tax-note">Includes India delivery. Advance WhatsApp order routing.</p>
+    <p style="font-size:0.75rem; color:var(--color-text-secondary); margin-bottom:1rem; text-align:center;">Includes India delivery. Advance WhatsApp order routing.</p>
     <div class="cart-drawer-cta-group">
       <a href="checkout.html" class="btn btn-primary btn-full btn-lg">PROCEED TO CHECKOUT</a>
     </div>

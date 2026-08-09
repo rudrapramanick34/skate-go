@@ -64,7 +64,7 @@ async function checkMaintenanceAndHydrateStore() {
       if (!annBar) {
         annBar = document.createElement('div');
         annBar.id = 'storeAnnouncementBar';
-        annBar.style.cssText = 'background:var(--color-primary, #e63946); color:#fff; text-align:center; padding:0.4rem 1rem; font-size:0.8rem; font-weight:600; letter-spacing:0.03em;';
+        annBar.style.cssText = 'background:var(--color-primary, #AB1509); color:#fff; text-align:center; padding:0.4rem 1rem; font-size:0.8rem; font-weight:600; letter-spacing:0.03em;';
         document.body.insertBefore(annBar, document.body.firstChild);
       }
       annBar.textContent = s.announcement_bar_text;
@@ -96,19 +96,19 @@ async function checkMaintenanceAndHydrateStore() {
  */
 function renderMaintenanceOverlay(s) {
   document.body.innerHTML = `
-    <div style="min-height: 100vh; background: #0a0a0a; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; font-family: system-ui, sans-serif;">
-      ${s.store_logo ? `<img src="${s.store_logo}" alt="${s.store_name}" style="max-height: 60px; margin-bottom: 1.5rem;">` : '<h1 style="color: #e63946; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Skate Go</h1>'}
-      <div style="background: rgba(230, 57, 70, 0.1); border: 1px solid #e63946; border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1.5rem;">🛠️</div>
+    <div style="min-height: 100vh; background: var(--color-background); color: var(--color-text-main); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; font-family: system-ui, sans-serif;">
+      ${s.store_logo ? `<img src="${s.store_logo}" alt="${s.store_name}" style="max-height: 60px; margin-bottom: 1.5rem;">` : '<h1 style="color: var(--color-primary); font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Skate Go</h1>'}
+      <div style="background: var(--color-secondary); border: 1px solid var(--color-primary); border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1.5rem;">🛠️</div>
       <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: 0.05em;">STORE UNDER MAINTENANCE</h2>
-      <p style="color: #a0a0a0; max-width: 500px; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">
+      <p style="color: var(--color-text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">
         We are currently updating our inventory with the latest inline speed equipment and wheels. We will be back online shortly!
       </p>
-      <div style="background: #141414; border: 1px solid #262626; border-radius: 8px; padding: 1.25rem 2rem; max-width: 400px; width: 100%;">
-        <div style="font-size: 0.75rem; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600;">Urgent Customer Support</div>
-        <div style="font-weight: 600; color: #fff;">WhatsApp: +${s.whatsapp_number || '917063062326'}</div>
-        <div style="font-size: 0.85rem; color: #aaa; margin-top: 0.25rem;">Email: ${s.support_email || 'support@skatelab.in'}</div>
+      <div style="background: var(--color-card); border: 1px solid var(--color-card-border); border-radius: 8px; padding: 1.25rem 2rem; max-width: 400px; width: 100%;">
+        <div style="font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600;">Urgent Customer Support</div>
+        <div style="font-weight: 600; color: var(--color-text-main);">WhatsApp: +${s.whatsapp_number || '917063062326'}</div>
+        <div style="font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 0.25rem;">Email: ${s.support_email || 'support@skatego.in'}</div>
       </div>
-      <a href="/admin/index.html" style="margin-top: 2rem; font-size: 0.75rem; color: #555; text-decoration: underline;">Admin Gateway Login</a>
+      <a href="/admin/index.html" style="margin-top: 2rem; font-size: 0.75rem; color: var(--color-text-secondary); text-decoration: underline;">Admin Gateway Login</a>
     </div>
   `;
 }
@@ -117,8 +117,8 @@ function renderMaintenanceOverlay(s) {
 const FALLBACK_FEATURED = [
   {
     id: 'wh-8085a',
-    title: 'Lab Speed 110mm 85A Wheels (Pack of 6)',
-    slug: 'lab-speed-110mm-85a-wheels-6pack',
+    title: 'Go Speed 110mm 85A Wheels (Pack of 6)',
+    slug: 'go-speed-110mm-85a-wheels-6pack',
     price: 3499,
     category_slug: 'wheels',
     category_name: 'Inline Wheels',
@@ -194,7 +194,6 @@ function renderProductGrid(container, products) {
     `;
   }).join('');
 
-  // Observe newly injected product cards for scroll reveal
   if ('IntersectionObserver' in window) {
     const cardObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -227,8 +226,8 @@ function renderProductGrid(container, products) {
         
         const originalText = button.textContent;
         button.textContent = 'ADDED!';
-        button.style.backgroundColor = '#00E676';
-        button.style.color = '#000000';
+        button.style.backgroundColor = 'var(--color-success)';
+        button.style.color = '#FFFFFF';
 
         setTimeout(() => {
           button.textContent = originalText;
