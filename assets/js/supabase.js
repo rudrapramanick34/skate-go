@@ -202,6 +202,32 @@ class SupabaseDataService {
     }
   }
 
+  /**
+   * Upload category banner/thumb image
+   */
+  async uploadCategoryImage(file) {
+    try {
+      const client = await this.getClient();
+      const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const filePath = `categories/${Date.now()}_${sanitizedName}`;
+
+      const { error: uploadError } = await client.storage
+        .from('product-images')
+        .upload(filePath, file, { cacheControl: '3600', upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = client.storage
+        .from('product-images')
+        .getPublicUrl(filePath);
+
+      return { success: true, url: publicUrlData.publicUrl };
+    } catch (err) {
+      console.error('[Skate Go DataService] Category image upload error:', err.message);
+      return { success: false, error: err.message };
+    }
+  }
+
   /* ========================================================================
      2. INVENTORY & PRODUCT CONTROL SERVICES
      ======================================================================== */
@@ -228,9 +254,6 @@ class SupabaseDataService {
     }
   }
 
-  /**
-   * Fetches all products for the Admin Inventory page (including inactive items and category data)
-   */
   async getAllProductsAdmin() {
     try {
       const client = await this.getClient();
@@ -254,9 +277,6 @@ class SupabaseDataService {
     }
   }
 
-  /**
-   * Checks if a given product SEO slug already exists in the database
-   */
   async checkSlugExists(slug, excludeId = null) {
     try {
       const client = await this.getClient();
@@ -480,9 +500,6 @@ class SupabaseDataService {
     }
   }
 
-  /**
-   * Deletes a product image from Supabase Storage bucket
-   */
   async deleteStorageImage(imageUrl) {
     try {
       if (!imageUrl || typeof imageUrl !== 'string' || !imageUrl.includes('/product-images/')) {
@@ -609,7 +626,7 @@ class SupabaseDataService {
           announcement_bar_text: 'FREE SHIPPING IN INDIA ON ORDERS ABOVE ₹2,999',
           hero_banner_title: 'HIGH PERFORMANCE INLINE GEAR',
           hero_banner_subtitle: 'Engineered for speed, durability, and maximum agility.',
-          hero_banner_cta_text: 'S CATALOGHOP',
+          hero_banner_cta_text: 'SHOP CATALOG',
           hero_banner_cta_link: 'shop.html',
           seo_default_title: 'Skate Go | Inline Skating Accessories & Speed Gear',
           seo_default_description: 'Shop high performance inline wheels, bearings, frames, and protective gear in India.',
@@ -646,19 +663,15 @@ class SupabaseDataService {
     try {
       const client = await this.getClient();
       
-      // 1. Check Supabase connection
       const { data: dbCheck, error: dbErr } = await client.from('store_settings').select('id').eq('id', 1).single();
       const supabaseConn = !dbErr && dbCheck;
 
-      // 2. Check Storage Buckets
       const { data: buckets, error: bErr } = await client.storage.listBuckets();
       const storageStatus = (!bErr && buckets && buckets.length > 0) ? 'Healthy' : 'Warning';
 
-      // 3. Auth Session status
       const { data: authData } = await client.auth.getSession();
       const authStatus = !!(authData && authData.session);
 
-      // 4. Settings verification
       const settingsRes = await this.getStoreSettings();
       const s = settingsRes.data || {};
 

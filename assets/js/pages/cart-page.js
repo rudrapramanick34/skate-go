@@ -1,17 +1,19 @@
 /**
- * Skate Go - Standalone Cart Page Script
- * Renders full cart page breakdown and synchronizes actions.
+ * SKATE GO V2 - Standalone Shopping Bag Page Controller
+ * File: assets/js/pages/cart-page.js
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCartPage();
 
-  window.addEventListener('skate_lab_cart_updated', () => {
+  // Listen to unified skate_go_cart_updated event
+  window.addEventListener('skate_go_cart_updated', () => {
     renderCartPage();
   });
 });
 
 function renderCartPage() {
+  if (!window.cartStore) return;
   const state = window.cartStore.getCartState();
   const bannerContainer = document.getElementById('cart-page-shipping-banner');
   const itemsContainer = document.getElementById('cart-page-items-list');
@@ -24,30 +26,23 @@ function renderCartPage() {
 
   if (!itemsContainer) return;
 
-  // 1. Update Summary Sidebar
+  // 1. Update Breakdown Values
   if (subtotalEl) subtotalEl.textContent = `₹${state.subtotal.toLocaleString('en-IN')}`;
-  if (weightEl) weightEl.textContent = `${state.totalWeight} g`;
-  if (shippingEl) {
-    shippingEl.textContent = state.shippingFee === 0 ? 'FREE' : `₹${state.shippingFee}`;
-    shippingEl.className = state.shippingFee === 0 ? 'detail-value text-accent' : 'detail-value';
-  }
+  if (weightEl) weightEl.textContent = `${state.totalWeight || 0} g`;
+  if (shippingEl) shippingEl.textContent = state.shippingFee === 0 ? 'FREE' : `₹${state.shippingFee}`;
   if (totalEl) totalEl.textContent = `₹${state.total.toLocaleString('en-IN')}`;
 
   if (checkoutBtn) {
     if (state.items.length === 0) {
-      checkoutBtn.classList.add('disabled');
-      checkoutBtn.setAttribute('tabindex', '-1');
       checkoutBtn.style.pointerEvents = 'none';
       checkoutBtn.style.opacity = '0.5';
     } else {
-      checkoutBtn.classList.remove('disabled');
-      checkoutBtn.removeAttribute('tabindex');
       checkoutBtn.style.pointerEvents = 'auto';
       checkoutBtn.style.opacity = '1';
     }
   }
 
-  // 2. Shipping Progress Banner
+  // 2. Free Shipping Tracker Bar
   const prog = state.shippingProgress;
   if (bannerContainer) {
     if (state.items.length === 0) {
@@ -55,10 +50,10 @@ function renderCartPage() {
     } else {
       bannerContainer.style.display = 'block';
       bannerContainer.innerHTML = `
-        <div class="shipping-progress-info" style="text-align: left; margin-bottom: 0.5rem;">
+        <div style="font-size:0.85rem; font-weight:700; margin-bottom:0.4rem;">
           ${prog.isUnlocked 
-            ? '<span class="shipping-status unlocked">⚡ FREE SHIPPING UNLOCKED ACROSS INDIA!</span>' 
-            : `<span class="shipping-status">Add <strong class="highlight">₹${prog.remaining}</strong> more to unlock <strong>FREE Shipping</strong></span>`
+            ? '<span style="color:var(--color-success)">⚡ FREE SHIPPING UNLOCKED ACROSS INDIA!</span>' 
+            : `Add <span style="color:var(--color-primary)">₹${prog.remaining}</span> more to unlock <strong>FREE Shipping</strong>`
           }
         </div>
         <div class="shipping-progress-bar-bg">
@@ -68,48 +63,34 @@ function renderCartPage() {
     }
   }
 
-  // 3. Render Empty State or Cards
+  // 3. Render Empty State vs. Bag Items
   if (state.items.length === 0) {
     itemsContainer.innerHTML = `
-      <div class="cart-empty-state" style="background: var(--color-card); border-radius: 12px; border: 1px solid var(--color-card-border); padding: 3rem 1.5rem;">
-        <div class="cart-empty-icon">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-        </div>
-        <h3 class="cart-empty-title">YOUR GEAR BAG IS EMPTY</h3>
-        <p class="cart-empty-text">No accessories selected yet. Check our high-speed wheels, bearings, and protection gear.</p>
-        <a href="shop.html" class="btn btn-primary">GO TO Categories</a>
+      <div class="cart-empty-state" style="background: var(--glass-bg); border-radius: var(--radius-md); border: 1px solid var(--glass-border); padding: 3rem 1.5rem; text-align: center;">
+        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem;">YOUR GEAR BAG IS EMPTY</h3>
+        <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem;">No inline components selected. Explore high-performance wheels and ceramic bearings.</p>
+        <a href="shop.html" class="btn btn-primary">EXPLORE CATALOG</a>
       </div>
     `;
     return;
   }
 
   itemsContainer.innerHTML = state.items.map(item => `
-    <article class="cart-page-card" data-key="${item.itemKey}">
-      <img src="${item.image || 'assets/images/placeholder-gear.jpg'}" alt="${item.title}" class="cart-page-card-img" />
-      <div class="cart-page-card-info">
-        <h3 class="cart-page-card-title">${item.title}</h3>
-        <div class="cart-page-card-meta">
-          ${item.selectedSize ? `<span class="variant-tag">Size: ${item.selectedSize}</span>` : ''}
-          ${item.selectedColor ? `<span class="variant-tag">Color: ${item.selectedColor}</span>` : ''}
+    <article class="cart-page-card" data-key="${item.itemKey}" style="background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1.25rem; display:flex; gap:1rem; align-items:center; margin-bottom:1rem;">
+      <img src="${item.image || 'assets/images/placeholder-gear.jpg'}" alt="${item.title}" style="width:80px; height:80px; border-radius:var(--radius-sm); object-fit:cover;" />
+      <div style="flex:1;">
+        <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.25rem;">${item.title}</h3>
+        <div style="font-size:0.8rem; color:var(--color-text-secondary); margin-bottom:0.5rem;">
+          ${item.selectedSize ? `Size: ${item.selectedSize} ` : ''}${item.selectedColor ? `| Color: ${item.selectedColor}` : ''}
         </div>
-        <span class="cart-page-card-weight">Weight: ${item.weight * item.quantity}g (${item.weight}g unit)</span>
-        <div class="cart-page-card-actions">
-          <div class="quantity-control-sm">
-            <button class="qty-btn-sm" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity - 1})" aria-label="Decrease quantity">-</button>
-            <span class="qty-val-sm">${item.quantity}</span>
-            <button class="qty-btn-sm" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity + 1})" aria-label="Increase quantity">+</button>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:inline-flex; align-items:center; border:1px solid var(--glass-border); border-radius:var(--radius-pill); background:var(--color-surface);">
+            <button style="background:none; border:none; width:30px; height:30px; cursor:pointer; font-weight:800; color:var(--color-text-main);" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity - 1})">-</button>
+            <span style="font-size:0.85rem; font-weight:800; padding:0 0.5rem;">${item.quantity}</span>
+            <button style="background:none; border:none; width:30px; height:30px; cursor:pointer; font-weight:800; color:var(--color-text-main);" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity + 1})">+</button>
           </div>
-          <span class="cart-item-price">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
-          <button class="cart-item-remove-btn" onclick="window.cartStore.removeItem('${item.itemKey}')" aria-label="Remove item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-          </button>
+          <span style="font-size:1.1rem; font-weight:900; color:var(--color-primary);">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
+          <button style="background:none; border:none; color:var(--color-danger); cursor:pointer;" onclick="window.cartStore.removeItem('${item.itemKey}')">Remove</button>
         </div>
       </div>
     </article>

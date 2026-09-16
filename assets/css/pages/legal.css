@@ -1,6 +1,7 @@
 /* ==========================================================================
    Skate Go - Legal & Informational Pages Styles
-   Mobile-First | High-Contrast Luxury Dark Aesthetic
+   Mobile-First | High-Contrast Theme Compatible Aesthetic
+   File: assets/css/pages/legal.css
    ========================================================================== */
 
 .legal-container {
@@ -11,7 +12,7 @@
 
 .legal-header {
   margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--color-card-border, #222222);
+  border-bottom: 1px solid var(--color-card-border);
   padding-bottom: 1.5rem;
 }
 
@@ -21,21 +22,21 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--color-primary, #EE0039);
+  color: var(--color-primary);
   margin-bottom: 0.5rem;
 }
 
 .legal-title {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--color-text-main, #FFFFFF);
+  color: var(--color-text-main);
   line-height: 1.2;
   letter-spacing: -0.5px;
 }
 
 .legal-updated {
   font-size: 0.85rem;
-  color: var(--color-text-secondary, #BDBDBD);
+  color: var(--color-text-secondary);
   margin-top: 0.5rem;
 }
 
@@ -45,22 +46,25 @@
   gap: 1.75rem;
 }
 
-.legal-section {
-  background: var(--color-card, #151515);
-  border: 1px solid var(--color-card-border, #222222);
-  border-radius: 8px;
-  padding: 1.5rem;
-  transition: border-color 0.2s ease;
+.legal-section,
+.info-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.75rem;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.legal-section:hover {
-  border-color: rgba(238, 0, 57, 0.3);
+.legal-section:hover,
+.info-card:hover {
+  border-color: var(--color-primary);
 }
 
-.legal-section h2 {
+.legal-section h2,
+.info-card h2 {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-text-main, #FFFFFF);
+  font-weight: 800;
+  color: var(--color-text-main);
   margin-bottom: 0.85rem;
   display: flex;
   align-items: center;
@@ -72,21 +76,24 @@
   display: inline-block;
   width: 4px;
   height: 1rem;
-  background-color: var(--color-primary, #EE0039);
+  background-color: var(--color-primary);
   border-radius: 2px;
 }
 
-.legal-section p {
+.legal-section p,
+.info-card p {
   font-size: 0.95rem;
-  color: var(--color-text-secondary, #BDBDBD);
-  line-height: 1.6;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
   margin-bottom: 0.75rem;
 }
 
-.legal-section p:last-child {
+.legal-section p:last-child,
+.info-card p:last-child {
   margin-bottom: 0;
 }
 
+/* Bullet list */
 .legal-list {
   list-style: none;
   padding: 0;
@@ -95,8 +102,8 @@
 
 .legal-list li {
   font-size: 0.95rem;
-  color: var(--color-text-secondary, #BDBDBD);
-  line-height: 1.6;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
   position: relative;
   padding-left: 1.25rem;
   margin-bottom: 0.5rem;
@@ -104,30 +111,58 @@
 
 .legal-list li::before {
   content: "•";
-  color: var(--color-primary, #EE0039);
+  color: var(--color-primary);
   font-weight: bold;
   position: absolute;
   left: 0;
 }
 
+/* Task 3: Visible Numbered Ordered Lists */
+ol.legal-ordered-list,
+.legal-content ol,
+.info-card ol {
+  list-style-type: decimal !important;
+  padding-left: 1.75rem !important;
+  margin: 0.85rem 0 1.25rem 0 !important;
+  display: block !important;
+}
+
+ol.legal-ordered-list li,
+.legal-content ol li,
+.info-card ol li {
+  display: list-item !important;
+  list-style-type: decimal !important;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  padding-left: 0.35rem;
+  margin-bottom: 0.65rem;
+}
+
+ol.legal-ordered-list li::marker,
+.legal-content ol li::marker,
+.info-card ol li::marker {
+  color: var(--color-primary) !important;
+  font-weight: 800 !important;
+}
+
 .highlight-box {
-  background: rgba(84, 9, 27, 0.4);
-  border-left: 3px solid var(--color-primary, #EE0039);
+  background: rgba(183, 44, 44, 0.08);
+  border-left: 3px solid var(--color-primary);
   padding: 1rem;
   border-radius: 0 6px 6px 0;
   margin: 1rem 0;
 }
 
 .highlight-box p {
-  color: var(--color-text-main, #FFFFFF) !important;
-  font-weight: 500;
-
+  color: var(--color-text-main) !important;
+  font-weight: 600;
 }
 
 /* Form Styles for Contact Page */
 .contact-grid {
   display: grid;
-  grid-template-columns: 1px;
+  grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 
@@ -148,23 +183,24 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-text-secondary, #BDBDBD);
+  color: var(--color-text-secondary);
 }
 
 .form-control {
   width: 100%;
-  background: var(--color-background, #0B0B0B);
-  border: 1px solid var(--color-card-border, #222222);
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
   border-radius: 6px;
   padding: 0.85rem 1rem;
-  color: var(--color-text-main, #FFFFFF);
+  color: var(--color-text-main);
   font-size: 1rem;
   outline: none;
-  min-height: 48px; /* Minimum 44px touch target requirement */
+  min-height: 48px;
+  transition: border-color var(--transition-fast);
 }
 
 .form-control:focus {
-  border-color: var(--color-primary, #EE0039);
+  border-color: var(--color-primary);
 }
 
 textarea.form-control {
@@ -173,10 +209,10 @@ textarea.form-control {
 }
 
 .btn-primary-action {
-  background: var(--color-primary, #EE0039);
+  background: var(--color-primary);
   color: #FFFFFF;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-pill);
   padding: 0.95rem 1.5rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -188,11 +224,11 @@ textarea.form-control {
   justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background var(--transition-fast);
 }
 
 .btn-primary-action:hover {
-  background: #C4002F;
+  background: var(--color-primary-hover);
 }
 
 /* Responsive Enhancements */

@@ -6,10 +6,19 @@
   <title>Privacy Policy | Skate Go</title>
   <meta name="description" content="Skate Go Privacy Policy details how customer delivery information and WhatsApp orders are processed safely in India.">
 
+  <!-- Immediate Non-Blocking Global Theme Initialization (FOUT Prevention) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('skate_go_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
   <!-- CSS Dependencies -->
   <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/header-footer.css">
+  <link rel="stylesheet" href="../assets/css/pages/legal.css">
 </head>
 <body>
 
@@ -17,21 +26,35 @@
   <header class="site-header">
     <div class="header-inner container">
       <a href="../index.html" class="brand-logo" aria-label="Skate Go Home">
-        <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+        <span class="logo-text">SKATE<span class="logo-accent">GO</span></span>
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="nav-desktop">
         <a href="../index.html" class="nav-link">Home</a>
-        <a href="../shop.html" class="nav-link">Categories</a>
+        <a href="../shop.html" class="nav-link">Catalog</a>
         <a href="../search.html" class="nav-link">Search Gear</a>
-        <a href="about.html" class="nav-link">About Lab</a>
+        <a href="about.html" class="nav-link">About Us</a>
         <a href="contact.html" class="nav-link">Support</a>
       </nav>
 
       <!-- Action Icons -->
       <div class="header-actions">
-        <a href="../search.html" class="cart-icon-btn" aria-label="Search Categories">
+        <button class="theme-toggle-btn" aria-label="Toggle Theme" title="Toggle Theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <a href="../search.html" class="cart-icon-btn" aria-label="Search Catalog">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -61,14 +84,14 @@
   <!-- MOBILE NAVIGATION DRAWER -->
   <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
     <div class="mobile-nav-header">
-      <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+      <span class="logo-text">SKATE<span class="logo-accent">GO</span></span>
       <button id="mobile-nav-close" class="close-btn" aria-label="Close Menu">&times;</button>
     </div>
     <nav class="mobile-nav-links">
       <a href="../index.html" class="mobile-nav-link">Home</a>
-      <a href="../shop.html" class="mobile-nav-link">Categories</a>
+      <a href="../shop.html" class="mobile-nav-link">Catalog</a>
       <a href="../search.html" class="mobile-nav-link">Search Gear</a>
-      <a href="about.html" class="mobile-nav-link">About Lab</a>
+      <a href="about.html" class="mobile-nav-link">About Us</a>
       <a href="contact.html" class="mobile-nav-link">Technical Support</a>
       <a href="shipping-policy.html" class="mobile-nav-link">Shipping Policy</a>
     </nav>
@@ -91,41 +114,41 @@
     <!-- POLICY CONTENT -->
     <section class="home-section container">
       <div class="info-card mb-2" style="padding: 2rem;">
-        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: #fff;">1. Overview & Commitment</h2>
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-primary);">1. Overview & Commitment</h2>
         <p style="line-height: 1.7; color: var(--color-text-secondary);">
           Skate Go ("we", "our", "us") respects your privacy and is committed to protecting your personal information. This Privacy Policy details how we handle personal details during your purchase of inline skating accessories within India.
         </p>
       </div>
 
       <div class="info-card mb-2" style="padding: 2rem;">
-        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: #fff;">2. Information We Collect</h2>
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-primary);">2. Information We Collect</h2>
         <p style="line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 1rem;">
           To process your orders and WhatsApp checkout requests, we capture only essential delivery information:
         </p>
-        <ul style="list-style: disc; padding-left: 1.5rem; color: var(--color-text-secondary); line-height: 1.8;">
+        <ol class="legal-ordered-list">
           <li><strong>Contact Details:</strong> Full Name and WhatsApp Mobile Number.</li>
           <li><strong>Shipping Information:</strong> Physical Shipping Address, City, State, PIN Code, and Landmark.</li>
           <li><strong>Order Metadata:</strong> Cart items, total bill, and manual UPI transaction references.</li>
-        </ul>
-        <div style="background: rgba(238, 0, 57, 0.1); border: 1px solid rgba(238, 0, 57, 0.3); padding: 1rem; border-radius: 6px; margin-top: 1rem; color: var(--color-text-main);">
+        </ol>
+        <div style="background: rgba(183, 44, 44, 0.1); border: 1px solid rgba(183, 44, 44, 0.25); padding: 1rem; border-radius: 6px; margin-top: 1rem; color: var(--color-text-main);">
           <strong>Security Note:</strong> We DO NOT collect, store, or process Credit/Debit Card numbers, CVVs, or Net Banking credentials on our website.
         </div>
       </div>
 
       <div class="info-card mb-2" style="padding: 2rem;">
-        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: #fff;">3. How We Use Your Data</h2>
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-primary);">3. How We Use Your Data</h2>
         <p style="line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 1rem;">
           Your data is processed strictly for fulfilling inline skating accessory dispatches across India via courier partners like Shiprocket:
         </p>
-        <ul style="list-style: disc; padding-left: 1.5rem; color: var(--color-text-secondary); line-height: 1.8;">
+        <ol class="legal-ordered-list">
           <li>Generating formatted WhatsApp order payloads for payment verification.</li>
           <li>Dispatching physical products to your domestic address.</li>
           <li>Communicating shipping status and AWB courier tracking codes.</li>
-        </ul>
+        </ol>
       </div>
 
       <div class="info-card mb-2" style="padding: 2rem;">
-        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: #fff;">4. Data Storage & Security</h2>
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-primary);">4. Data Storage & Security</h2>
         <p style="line-height: 1.7; color: var(--color-text-secondary);">
           All database transactions are securely executed through Supabase infrastructure configured with strict Row Level Security (RLS) policies. Access to customer shipping addresses is limited exclusively to authorized Skate Go dispatch administrators.
         </p>
@@ -140,14 +163,14 @@
         
         <div class="footer-brand-col">
           <a href="../index.html" class="brand-logo mb-1">
-            <span class="logo-text">SKATE<span class="logo-accent">LAB</span></span>
+            <span class="logo-text">SKATE<span class="logo-accent">GO</span></span>
           </a>
           <p class="footer-tagline">India's premier exclusive inline skating accessories retailer. Engineered for precision, speed, and maximum durability.</p>
           <div class="footer-badge">INLINE ACCESSORIES ONLY</div>
         </div>
 
         <div class="footer-links-col">
-          <h4 class="footer-title">LAB GUIDES</h4>
+          <h4 class="footer-title">GUIDES</h4>
           <ul class="footer-links">
             <li><a href="about.html">About Us</a></li>
             <li><a href="contact.html">Contact Us</a></li>

@@ -5,13 +5,15 @@
 
 /* Site Header */
 .site-header {
-  background-color: rgba(11, 11, 11, 0.9);
-  border-bottom: 1px solid var(--color-card-border);
+  background-color: var(--glass-bg);
+  border-bottom: 1px solid var(--glass-border);
   position: sticky;
   top: 0;
   z-index: 900;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 .header-inner {
@@ -74,9 +76,10 @@
 }
 
 .cart-icon-btn,
+.theme-toggle-btn,
 .mobile-menu-btn {
-  background: transparent;
-  border: none;
+  background: var(--color-card);
+  border: 1px solid var(--glass-border);
   color: var(--color-text-main);
   width: 42px;
   height: 42px;
@@ -85,19 +88,23 @@
   justify-content: center;
   cursor: pointer;
   position: relative;
-  border-radius: 8px;
-  transition: background-color 0.2s;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s ease;
 }
 
 .cart-icon-btn:hover,
+.theme-toggle-btn:hover,
 .mobile-menu-btn:hover {
-  background-color: var(--color-card);
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
 }
 
 .cart-count-badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 2px;
+  right: 2px;
   background-color: var(--color-primary);
   color: #ffffff;
   font-size: 0.675rem;
@@ -128,7 +135,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
   z-index: 9990;
   opacity: 0;
@@ -148,7 +155,7 @@
   width: 85%;
   max-width: 320px;
   height: 100vh;
-  background-color: var(--color-card);
+  background-color: var(--color-surface);
   border-right: 1px solid var(--color-card-border);
   z-index: 9995;
   transform: translateX(-100%);
@@ -191,10 +198,10 @@
   color: var(--color-primary);
 }
 
-/* Premium Footer Layout (Brand + LAB GUIDES + POLICIES) */
+/* Footer Layout */
 .site-footer {
-  background-color: var(--color-card);
-  border-top: 1px solid var(--color-card-border);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--glass-border);
   padding: 4rem 0 2rem;
   margin-top: auto;
 }
@@ -227,13 +234,13 @@
 
 .footer-badge {
   display: inline-block;
-  background-color: rgba(238, 0, 57, 0.1);
+  background-color: rgba(183, 44, 44, 0.1);
   color: var(--color-primary);
   font-size: 0.7rem;
   font-weight: 800;
   padding: 0.3rem 0.6rem;
   border-radius: 4px;
-  border: 1px solid rgba(238, 0, 57, 0.2);
+  border: 1px solid rgba(183, 44, 44, 0.25);
 }
 
 .footer-title {
@@ -262,7 +269,7 @@
 
 .footer-bottom {
   padding-top: 2rem;
-  border-top: 1px solid var(--color-card-border);
+  border-top: 1px solid var(--glass-border);
   text-align: center;
   font-size: 0.8rem;
   color: var(--color-text-secondary);

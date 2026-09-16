@@ -1,49 +1,121 @@
 /**
- * Skate Go - Dynamic Cart Drawer & Site-Wide Theme Switcher
- * Handles cart overlay injection, theme switching persistence, slide-over navigation, and event bindings.
+ * SKATE GO V2 - Dynamic Cart Drawer, Global Theme Engine, Custom Cursor & Page Loader
+ * File: assets/js/cart-drawer.js
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initThemeSwitcher();
+  initGlobalThemeEngine();
+  initPageLoader();
+  initCustomDesktopCursor();
   injectCartDrawerMarkup();
   bindCartDrawerEvents();
   bindMobileNavEvents();
   renderCartDrawer();
+  updateAllCartBadges();
 
-  // Global event listener for cart updates
+  // Listen to single standardized cart update event
   window.addEventListener('skate_go_cart_updated', () => {
     renderCartDrawer();
-    updateHeaderCartBadge();
+    updateAllCartBadges();
   });
-
-  updateHeaderCartBadge();
 });
 
 /**
- * Site-Wide Theme Switcher Controller
+ * 1. Unified Global Theme Engine
  */
-function initThemeSwitcher() {
+function initGlobalThemeEngine() {
   const currentTheme = localStorage.getItem('skate_go_theme') || 'light';
   document.documentElement.setAttribute('data-theme', currentTheme);
 
-  document.querySelectorAll('#theme-toggle-btn, .theme-toggle-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const activeTheme = document.documentElement.getAttribute('data-theme');
-      const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
-      
-      document.documentElement.setAttribute('data-theme', nextTheme);
-      localStorage.setItem('skate_go_theme', nextTheme);
+  document.querySelectorAll('.theme-toggle-btn, #theme-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const active = document.documentElement.getAttribute('data-theme');
+      const next = active === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('skate_go_theme', next);
     });
   });
 }
 
-function injectCartDrawerMarkup() {
-  if (document.getElementById('cart-drawer-overlay') && document.getElementById('cart-drawer')) return;
+/**
+ * 2. Branded Page Loader Controller
+ */
+function initPageLoader() {
+  const loader = document.getElementById('global-page-loader');
+  if (!loader) return;
 
-  const legacyOverlay = document.getElementById('cart-drawer-overlay');
-  if (legacyOverlay && !document.getElementById('cart-drawer')) {
-    legacyOverlay.remove();
+  const hideLoader = () => {
+    loader.classList.add('loaded');
+    setTimeout(() => {
+      if (loader.parentNode) loader.parentNode.removeChild(loader);
+    }, 600);
+  };
+
+  if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 300);
+  } else {
+    window.addEventListener('load', () => setTimeout(hideLoader, 300));
   }
+}
+
+/**
+ * 3. Desktop Custom Magnetic Cursor
+ */
+function initCustomDesktopCursor() {
+  if (window.matchMedia('(pointer: coarse)').matches) return; // Skip touch devices
+
+  let dot = document.querySelector('.custom-cursor-dot');
+  let outline = document.querySelector('.custom-cursor-outline');
+
+  if (!dot || !outline) {
+    dot = document.createElement('div');
+    dot.className = 'custom-cursor-dot';
+    outline = document.createElement('div');
+    outline.className = 'custom-cursor-outline';
+    document.body.appendChild(dot);
+    document.body.appendChild(outline);
+  }
+
+  let mouseX = 0, mouseY = 0;
+  let outlineX = 0, outlineY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    document.body.classList.add('cursor-active');
+
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+  });
+
+  const animateCursor = () => {
+    outlineX += (mouseX - outlineX) * 0.18;
+    outlineY += (mouseY - outlineY) * 0.18;
+    outline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(animateCursor);
+  };
+  requestAnimationFrame(animateCursor);
+
+  // Hover effect over clickable targets
+  const interactiveTargets = 'a, button, input, select, textarea, .product-card, .thumb-btn, .variant-chip';
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(interactiveTargets)) {
+      document.body.classList.add('cursor-hover');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(interactiveTargets)) {
+      document.body.classList.remove('cursor-hover');
+    }
+  });
+}
+
+/**
+ * 4. Slide-over Cart Drawer DOM Injection
+ */
+function injectCartDrawerMarkup() {
+  if (document.getElementById('cart-drawer')) return;
 
   const drawerHTML = `
     <div id="cart-drawer-overlay" class="cart-drawer-overlay" aria-hidden="true"></div>
@@ -57,9 +129,7 @@ function injectCartDrawerMarkup() {
       </header>
 
       <section class="cart-drawer-shipping-tracker" id="cart-shipping-tracker"></section>
-
       <div id="cart-drawer-items" class="cart-drawer-items"></div>
-
       <footer id="cart-drawer-footer" class="cart-drawer-footer"></footer>
     </aside>
   `;
@@ -129,10 +199,12 @@ window.closeCartDrawer = function() {
   }
 };
 
-function updateHeaderCartBadge() {
+function updateAllCartBadges() {
   if (!window.cartStore) return;
   const count = window.cartStore.getItemCount();
-  document.querySelectorAll('.cart-count-badge, #cart-count').forEach(badge => {
+  
+  // Header badges + Bottom navigation badges
+  document.querySelectorAll('.cart-count-badge, #cart-count, #bottom-nav-cart-badge').forEach(badge => {
     badge.textContent = count;
     badge.style.display = count > 0 ? 'inline-flex' : 'none';
   });
@@ -152,20 +224,20 @@ function renderCartDrawer() {
     countBadge.textContent = `${state.itemCount} ${state.itemCount === 1 ? 'ITEM' : 'ITEMS'}`;
   }
 
-  // 1. Shipping Tracker
+  // 1. Shipping Progress
   const prog = state.shippingProgress;
   if (trackerContainer) {
     if (state.items.length === 0) {
       trackerContainer.innerHTML = '';
     } else {
       trackerContainer.innerHTML = `
-        <div class="shipping-progress-info">
+        <div class="shipping-progress-info" style="font-size:0.8rem; margin-bottom:0.35rem;">
           ${prog.isUnlocked 
             ? '<span class="shipping-status unlocked" style="color:var(--color-success); font-weight:800;">⚡ FREE SHIPPING UNLOCKED!</span>' 
             : `<span class="shipping-status">Add <strong style="color:var(--color-primary)">₹${prog.remaining}</strong> more for <strong>FREE Shipping</strong></span>`
           }
         </div>
-        <div class="shipping-progress-bar-bg" style="margin-top:0.4rem;">
+        <div class="shipping-progress-bar-bg">
           <div class="shipping-progress-bar-fill" style="width: ${prog.percentage}%"></div>
         </div>
       `;
@@ -176,16 +248,16 @@ function renderCartDrawer() {
   if (state.items.length === 0) {
     itemsContainer.innerHTML = `
       <div class="cart-empty-state" style="text-align:center; padding: 3rem 1rem;">
-        <div class="cart-empty-icon" style="color: var(--color-text-secondary); margin-bottom: 1rem; opacity: 0.5;">
-          <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <div style="color: var(--color-text-secondary); margin-bottom: 1rem; opacity: 0.5;">
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
           </svg>
         </div>
         <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem;">YOUR GEAR BAG IS EMPTY</h3>
-        <p style="font-size:0.85rem; color:var(--color-text-secondary); margin-bottom:1.5rem;">Equip yourself with high-velocity inline wheels, ceramic bearings, and precision accessories.</p>
-        <a href="shop.html" class="btn btn-primary btn-full" onclick="closeCartDrawer()">EXPLORE CATEGORIES</a>
+        <p style="font-size:0.85rem; color:var(--color-text-secondary); margin-bottom:1.5rem;">Equip yourself with high-velocity wheels, bearings, and precision accessories.</p>
+        <a href="shop.html" class="btn btn-primary btn-full" onclick="closeCartDrawer()">EXPLORE CATALOG</a>
       </div>
     `;
     footerContainer.innerHTML = '';
@@ -200,14 +272,16 @@ function renderCartDrawer() {
       </div>
       <div class="cart-item-details" style="flex-grow:1;">
         <h4 class="cart-item-title">${item.title}</h4>
+        <div style="font-size:0.75rem; color:var(--color-text-secondary); margin-bottom:0.35rem;">
+          ${item.selectedSize ? `Size: ${item.selectedSize} ` : ''}${item.selectedColor ? `| Color: ${item.selectedColor}` : ''}
+        </div>
         <div class="cart-item-price-row" style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
           <span class="cart-item-price">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
-          <span style="font-size:0.75rem; color:var(--color-text-secondary);">(₹${item.price.toLocaleString('en-IN')} each)</span>
         </div>
         <div class="cart-item-actions" style="display:flex; align-items:center; justify-content:space-between;">
-          <div class="quantity-control-sm" style="display:inline-flex; align-items:center; border:1px solid var(--color-card-border); border-radius:6px;">
+          <div style="display:inline-flex; align-items:center; border:1px solid var(--glass-border); border-radius:var(--radius-pill); background:var(--color-surface);">
             <button style="background:none; border:none; color:var(--color-text-main); width:28px; height:28px; cursor:pointer; font-weight:800;" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity - 1})" aria-label="Decrease quantity">-</button>
-            <span style="font-size:0.8rem; font-weight:800; padding:0 0.5rem;">${item.quantity}</span>
+            <span style="font-size:0.8rem; font-weight:800; padding:0 0.4rem;">${item.quantity}</span>
             <button style="background:none; border:none; color:var(--color-text-main); width:28px; height:28px; cursor:pointer; font-weight:800;" onclick="window.cartStore.updateQuantity('${item.itemKey}', ${item.quantity + 1})" aria-label="Increase quantity">+</button>
           </div>
           <button style="background:none; border:none; color:var(--color-text-secondary); cursor:pointer;" onclick="window.cartStore.removeItem('${item.itemKey}')" aria-label="Remove item">
@@ -229,16 +303,13 @@ function renderCartDrawer() {
     </div>
     <div class="cart-summary-row">
       <span>Estimated Delivery</span>
-      <span class="${state.shippingFee === 0 ? 'text-accent' : ''}">
-        ${state.shippingFee === 0 ? 'FREE' : `₹${state.shippingFee}`}
-      </span>
+      <span>${state.shippingFee === 0 ? 'FREE' : `₹${state.shippingFee}`}</span>
     </div>
     <div class="cart-summary-row total-row">
       <span>Estimated Total</span>
       <span class="summary-value-total">₹${state.total.toLocaleString('en-IN')}</span>
     </div>
-    <p style="font-size:0.75rem; color:var(--color-text-secondary); margin-bottom:1rem; text-align:center;">Includes India delivery. Advance WhatsApp order routing.</p>
-    <div class="cart-drawer-cta-group">
+    <div style="margin-top:1rem;">
       <a href="checkout.html" class="btn btn-primary btn-full btn-lg">PROCEED TO CHECKOUT</a>
     </div>
   `;

@@ -1,66 +1,73 @@
 /* ==========================================================================
-   Skate Go - CENTRALIZED DESIGN SYSTEM & THEMES
+   SKATE GO V2 - CENTRALIZED DESIGN SYSTEM & THEME ENGINE
    File: assets/css/main.css
    ========================================================================== */
 
-/* 1. Design System Tokens */
+/* 1. Global CSS Design Tokens */
 :root {
-  /* DEFAULT LIGHT THEME (Red + Soft Yellow + White) */
-  --color-primary:          #AB1509; /* Deep Rich Red (Ref Image 1) */
-  --color-primary-hover:    #850F06;
-  --color-secondary:        #FFF7D3; /* Soft Yellow (Ref Image 1) */
-  --color-secondary-dark:   #EAE0B5;
-  --color-background:       #FAFAFC;
+  /* V2 COLOR SYSTEM */
+  --color-primary:          #B72C2C; /* Primary Red (Mockup Accent) */
+  --color-primary-hover:    #9E2424;
+  --color-secondary:        #D45C5C; /* Secondary Crimson */
+  --color-cream:            #F7EFE7; /* Clean Light Cream */
+  --color-cream-warm:       #E8E1D6; /* Warm Accent Cream */
+  --color-dark:             #1E1818; /* Dark Base Obsidian */
+  --color-dark-surface:     #282020; /* Card Base Dark */
+
+  /* DEFAULT LIGHT THEME TOKENS */
+  --color-background:       #F7EFE7;
   --color-surface:          #FFFFFF;
-  --color-surface-secondary:#FFFDF2;
-  --color-card:             #FFFFFF;
-  --color-card-border:      #E6E6EC;
-  --color-text-main:        #111113;
-  --color-text-secondary:   #52525B;
-  --color-success:         #00A854;
-  --color-danger:          #DC2626;
-  --color-shadow:           rgba(171, 21, 9, 0.08);
+  --color-surface-secondary:#F0E7DD;
+  --color-card:             rgba(255, 255, 255, 0.85);
+  --color-card-border:      rgba(183, 44, 44, 0.12);
+  --color-text-main:        #1E1818;
+  --color-text-secondary:   #5E5555;
+  --color-success:          #16A34A;
+  --color-warning:          #D97706;
+  --color-danger:           #DC2626;
+  --color-shadow:           rgba(183, 44, 44, 0.08);
 
-  /* Glassmorphism Tokens (Light Fallback) */
-  --glass-bg:               rgba(255, 255, 255, 0.85);
-  --glass-border:           rgba(0, 0, 0, 0.08);
-  --glass-blur:             0px;
-  --glass-shadow:           0 10px 30px rgba(0, 0, 0, 0.05);
-
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-  --max-width-container: 1240px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* DARK THEME (Dark Glassmorphism - Ref Image 2) */
-[data-theme="dark"] {
-  --color-primary:          #E5232A; /* Rich Glowing Red */
-  --color-primary-hover:    #FF3B44;
-  --color-secondary:        #2A1215;
-  --color-secondary-dark:   #1A0A0C;
-  --color-background:       #090809;
-  --color-surface:          rgba(22, 18, 19, 0.65);
-  --color-surface-secondary:rgba(35, 24, 25, 0.6);
-  --color-card:             rgba(255, 255, 255, 0.04);
-  --color-card-border:      rgba(255, 255, 255, 0.12);
-  --color-text-main:        #F4F4F6;
-  --color-text-secondary:   #A1A1AA;
-  --color-success:         #00E676;
-  --color-danger:          #EF4444;
-  --color-shadow:           rgba(0, 0, 0, 0.5);
-
-  /* Glassmorphism Tokens (Dark Active) */
-  --glass-bg:               rgba(24, 18, 18, 0.62);
-  --glass-border:           rgba(255, 255, 255, 0.14);
+  /* Light Glassmorphism */
+  --glass-bg:               rgba(255, 255, 255, 0.82);
+  --glass-border:           rgba(183, 44, 44, 0.14);
   --glass-blur:             16px;
-  --glass-shadow:           0 16px 40px rgba(0, 0, 0, 0.6);
+  --glass-shadow:           0 12px 32px rgba(30, 24, 24, 0.06);
+
+  /* Typography & Layout Metrics */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  --max-width-container: 1240px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+  
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 2. Global Reset */
+/* 2. V2 DARK THEME (Mockup Cinematic Dark Mode) */
+[data-theme="dark"] {
+  --color-background:       #140F0F;
+  --color-surface:          #1E1818;
+  --color-surface-secondary:#261F1F;
+  --color-card:             rgba(38, 31, 31, 0.72);
+  --color-card-border:      rgba(255, 255, 255, 0.08);
+  --color-text-main:        #FBF8F5;
+  --color-text-secondary:   #B8AEA8;
+  --color-success:          #22C55E;
+  --color-warning:          #F59E0B;
+  --color-danger:           #EF4444;
+  --color-shadow:           rgba(0, 0, 0, 0.6);
+
+  /* Dark Glassmorphism */
+  --glass-bg:               rgba(30, 24, 24, 0.75);
+  --glass-border:           rgba(255, 255, 255, 0.12);
+  --glass-blur:             20px;
+  --glass-shadow:           0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. Global CSS Reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -86,10 +93,18 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
+  padding-bottom: 74px; /* Space for Mobile Bottom Navigation */
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-/* Typography Defaults */
+@media (min-width: 860px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+/* Typography Base */
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-main);
   font-weight: 800;
@@ -104,10 +119,20 @@ p {
 a {
   color: inherit;
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
-ul, ol {
+ul {
   list-style: none;
+}
+
+/* Task 3 Fix: Support proper numbered ordered lists */
+ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+ol li {
+  list-style-type: decimal;
 }
 
 img {
@@ -116,7 +141,7 @@ img {
   display: block;
 }
 
-/* Container Helper */
+/* Container */
 .container {
   width: 100%;
   max-width: var(--max-width-container);
@@ -126,44 +151,45 @@ img {
   padding-right: 1.25rem;
 }
 
-/* Base Buttons */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1.6rem;
   font-size: 0.875rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: var(--radius-sm);
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
   text-align: center;
   gap: 0.5rem;
+  user-select: none;
 }
 
 .btn-primary {
   background-color: var(--color-primary);
   color: #FFFFFF;
-  box-shadow: 0 4px 14px var(--color-shadow);
+  box-shadow: 0 6px 20px var(--color-shadow);
 }
 
 .btn-primary:hover {
   background-color: var(--color-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(171, 21, 9, 0.3);
+  box-shadow: 0 8px 24px rgba(183, 44, 44, 0.35);
 }
 
-.btn-buy-now {
-  background-color: var(--color-text-main);
-  color: var(--color-background);
+.btn-secondary {
+  background-color: var(--color-cream-warm);
+  color: var(--color-dark);
 }
 
-.btn-buy-now:hover {
-  opacity: 0.9;
+.btn-secondary:hover {
+  background-color: var(--color-cream);
   transform: translateY(-1px);
 }
 
@@ -176,18 +202,8 @@ img {
 .btn-outline:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  background-color: rgba(171, 21, 9, 0.05);
+  background-color: rgba(183, 44, 44, 0.06);
   transform: translateY(-1px);
-}
-
-.btn-share {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-card-border);
-  color: var(--color-text-main);
-}
-
-.btn-share:hover {
-  border-color: var(--color-primary);
 }
 
 .btn-full {
@@ -195,12 +211,18 @@ img {
 }
 
 .btn-sm {
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 1rem;
   font-size: 0.8rem;
   min-height: 38px;
 }
 
-/* Glassmorphism Panel Class */
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
+  min-height: 52px;
+}
+
+/* Glassmorphism Panel */
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
@@ -209,193 +231,61 @@ img {
   box-shadow: var(--glass-shadow);
 }
 
-/* ==========================================================================
-   PRODUCT DETAIL PAGE (PDP) STYLES
-   ========================================================================== */
-
-.pdp-container {
-  padding-top: 1.5rem;
-  padding-bottom: 4rem;
-}
-
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 1.5rem;
-}
-
-.breadcrumb a:hover {
-  color: var(--color-primary);
-}
-
-.breadcrumb-separator {
-  color: var(--color-text-secondary);
-  opacity: 0.5;
-}
-
-.breadcrumb-current {
-  color: var(--color-text-main);
-  font-weight: 600;
-}
-
-.pdp-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-
-@media (min-width: 860px) {
-  .pdp-grid {
-    grid-template-columns: 1.1fr 1fr;
-    gap: 3rem;
-  }
-}
-
-.pdp-main-image-wrap {
-  position: relative;
-  background-color: var(--color-card);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 320px;
-  max-height: 480px;
-  overflow: hidden;
-}
-
-.pdp-main-image-wrap img {
-  max-width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-  transition: transform var(--transition-normal);
-}
-
-.discount-badge {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background-color: var(--color-primary);
-  color: #FFFFFF;
-  font-size: 0.75rem;
-  font-weight: 900;
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.5px;
-  z-index: 2;
-}
-
-.thumb-btn {
-  background: var(--color-card);
-  border: 2px solid var(--color-card-border);
-  border-radius: var(--radius-sm);
-  padding: 0.3rem;
-  width: 70px;
-  height: 70px;
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.thumb-btn.active, .thumb-btn:hover {
-  border-color: var(--color-primary);
-}
-
-.pdp-category-badge {
-  background: var(--color-secondary);
-  color: var(--color-primary);
-  font-size: 0.75rem;
-  font-weight: 800;
-  padding: 0.25rem 0.6rem;
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.5px;
-}
-
-.stock-status-badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-success);
-}
-
-.pdp-price {
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: var(--color-primary);
-}
-
-.pdp-original-price {
-  font-size: 1.1rem;
-  color: var(--color-text-secondary);
-  text-decoration: line-through;
-}
-
-.variant-chip {
-  background: var(--color-card);
-  border: 1px solid var(--color-card-border);
-  color: var(--color-text-main);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.variant-chip.active, .variant-chip:hover {
-  border-color: var(--color-primary);
-  background-color: var(--color-secondary);
-  color: var(--color-primary);
-}
-
-.quantity-control {
-  display: inline-flex;
-  align-items: center;
-  background: var(--color-card);
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-sm);
-}
-
-.qty-btn {
-  background: transparent;
-  border: none;
-  color: var(--color-text-main);
-  font-size: 1.25rem;
-  font-weight: 700;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.qty-btn:hover {
-  color: var(--color-primary);
-}
-
-.pdp-toast {
+/* Page Loader */
+.global-page-loader {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--color-primary);
-  color: #FFFFFF;
-  padding: 0.85rem 1.25rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  font-weight: 700;
-  box-shadow: 0 8px 24px var(--color-shadow);
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all var(--transition-normal);
-  z-index: 9999;
+  inset: 0;
+  background-color: var(--color-background);
+  z-index: 1000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
 }
 
-.pdp-toast.show {
-  transform: translateY(0);
-  opacity: 1;
+.global-page-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--color-text-main);
+  animation: loaderPulse 1.4s ease-in-out infinite alternate;
+}
+
+.loader-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(183, 44, 44, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: loaderSpin 0.7s linear infinite;
+}
+
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loaderPulse {
+  from { opacity: 0.7; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1.03); }
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
