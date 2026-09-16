@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   let categoriesMap = {};
   let activeCategorySlug = 'all';
 
-  // Render initial skeleton loading state
+  // Issue 4: Render initial skeleton loading state
   if (gridContainer) {
     gridContainer.innerHTML = Array(6).fill(0).map(() => `
-      <div class="skeleton-card" style="background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:0.85rem; display:flex; flex-direction:column; gap:0.6rem;">
+      <div class="skeleton-card" style="background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:1rem; display:flex; flex-direction:column; gap:0.75rem;">
         <div style="width:100%; aspect-ratio:1; background:var(--color-surface-secondary); border-radius:var(--radius-sm);"></div>
-        <div style="height:12px; width:70%; background:var(--color-surface-secondary); border-radius:4px;"></div>
-        <div style="height:12px; width:40%; background:var(--color-surface-secondary); border-radius:4px;"></div>
+        <div style="height:14px; width:70%; background:var(--color-surface-secondary); border-radius:4px;"></div>
+        <div style="height:14px; width:40%; background:var(--color-surface-secondary); border-radius:4px;"></div>
       </div>
     `).join('');
   }
@@ -95,70 +95,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (filtered.length === 0) {
-      gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-secondary);">No items available in this category.</div>`;
+      gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #AAA;">No items available in this category.</div>`;
       return;
     }
 
-    // 2-Column Mobile-First Responsive Product Card Markup
     gridContainer.innerHTML = filtered.map(p => {
       const availableStock = Math.max(0, (p.stock_quantity || 0) - (p.reserved_stock || 0));
       const isOutOfStock = availableStock <= 0;
       const mainImg = Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : (p.image || 'assets/images/placeholder-gear.jpg');
       const productLink = `product.html?slug=${p.slug || ''}&id=${p.id}`;
-      const hasDiscount = p.original_price && p.original_price > p.price;
-      const discountPct = hasDiscount ? Math.round(((p.original_price - p.price) / p.original_price) * 100) : 0;
 
+      // Issue 3: Entire product card is clickable via wrapping or data-href click handler
       return `
         <article class="product-card ${isOutOfStock ? 'out-of-stock-card' : ''}" data-product-href="${productLink}" style="cursor: pointer;">
-          ${hasDiscount ? `<span class="product-discount-tag">${discountPct}% OFF</span>` : ''}
-          ${isOutOfStock ? `<span class="product-discount-tag" style="background:rgba(220,38,38,0.9); color:#fff;">OUT OF STOCK</span>` : ''}
-
-          <a href="${productLink}" class="product-card-image-wrapper">
-            <img src="${mainImg}" alt="${p.title}" loading="lazy" class="product-card-img" />
-          </a>
-
-          <div class="product-card-content">
-            <span class="product-category-tag">${p.categories?.name || 'INLINE GEAR'}</span>
-            <h3 class="product-title"><a href="${productLink}">${p.title}</a></h3>
-
-            <div class="product-price-row">
-              <div>
-                <span class="product-price">₹${(Number(p.price) || 0).toLocaleString('en-IN')}</span>
-                ${hasDiscount ? `<span class="product-orig-price">₹${Number(p.original_price).toLocaleString('en-IN')}</span>` : ''}
-              </div>
-            </div>
-
-            <div style="margin-top: auto; padding-top: 0.65rem;">
-              ${isOutOfStock ? `
-                <button class="btn btn-outline btn-sm btn-full" disabled style="opacity: 0.5; cursor: not-allowed; min-height: 36px;">
-                  OUT OF STOCK
-                </button>
-              ` : `
-                <button class="btn btn-primary btn-sm btn-full add-to-bag-btn" 
-                  data-id="${p.id}" 
-                  data-title="${p.title.replace(/"/g, '&quot;')}" 
-                  data-price="${p.price}"
-                  data-image="${mainImg}"
-                  style="min-height: 36px; padding: 0.4rem 0.6rem; font-size: 0.75rem;">
-                  + ADD TO CART
-                </button>
-              `}
-            </div>
+          <div class="product-card-img" style="background-image: url('${mainImg}'); background-size: cover; background-position: center; min-height: 180px; position: relative;">
+            ${isOutOfStock ? `<span style="position: absolute; top: 10px; right: 10px; background: #7F1D1D; color: #FCA5A5; font-size: 0.7rem; font-weight: bold; padding: 0.25rem 0.5rem; border-radius: 4px; text-transform: uppercase;">OUT OF STOCK</span>` : ''}
           </div>
+
+          <h3 class="product-card-title">
+            <a href="${productLink}" style="color:var(--color-text-main); text-decoration:none;">${p.title}</a>
+          </h3>
+
+          <p style="font-size: 0.8rem; color: var(--color-text-secondary); margin-bottom: 0.75rem; line-height:1.4;">
+            ${p.description ? p.description.slice(0, 90) + '...' : ''}
+          </p>
+
+          <div class="product-card-price" style="margin-bottom:0.5rem;">₹${(Number(p.price) || 0).toLocaleString('en-IN')}</div>
+
+          ${isOutOfStock ? `
+            <button class="btn btn-outline btn-sm btn-full" disabled style="opacity: 0.5; cursor: not-allowed;">
+              OUT OF STOCK
+            </button>
+          ` : `
+            <button class="btn btn-primary btn-sm btn-full add-to-bag-btn" 
+              data-id="${p.id}" 
+              data-title="${p.title.replace(/"/g, '&quot;')}" 
+              data-price="${p.price}"
+              data-image="${mainImg}">
+              + ADD TO CART
+            </button>
+          `}
         </article>
       `;
     }).join('');
 
-    // Entire card click handler
+    // Issue 3: Make complete product card clickable while preventing button conflict
     gridContainer.querySelectorAll('.product-card').forEach(card => {
       card.addEventListener('click', (e) => {
-        if (e.target.closest('button') || e.target.closest('a')) return;
+        if (e.target.closest('button') || e.target.closest('a')) return; // let buttons/links handle themselves
         const href = card.getAttribute('data-product-href');
         if (href) window.location.href = href;
       });
     });
 
-    // Add To Cart Listeners
+    // Attach Add To Cart Listeners
     document.querySelectorAll('.add-to-bag-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -170,8 +160,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (window.cartStore) {
           window.cartStore.addItem({ id, title, price, quantity: 1, image });
-          btn.textContent = 'ADDED!';
-          setTimeout(() => { btn.textContent = '+ ADD TO CART'; }, 1000);
           if (typeof window.openCartDrawer === 'function') {
             window.openCartDrawer();
           }
