@@ -558,14 +558,16 @@ class SupabaseDataService {
         created_at: now
       };
 
-      const { data, error } = await client
+      // Public checkout is allowed to INSERT an order, but must not be
+      // allowed to SELECT/read customer orders. Do not use .select() here,
+      // because PostgREST would request the inserted row back and trigger
+      // the orders SELECT RLS policy.
+      const { error } = await client
         .from('orders')
-        .insert([payload])
-        .select()
-        .single();
+        .insert([payload]);
 
       if (error) throw error;
-      return { success: true, data };
+      return { success: true, data: null };
     } catch (err) {
       console.error('[Skate Go DataService] Error creating order:', err.message);
       return { success: false, error: err.message, data: null };
