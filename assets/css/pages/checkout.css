@@ -100,9 +100,24 @@
   border-radius: 8px;
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
-  color: var(--color-text-main);
+  color: #FBF8F5;
+  -webkit-text-fill-color: #FBF8F5;
+  caret-color: #FBF8F5;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #8F8580;
+  opacity: 1;
+  -webkit-text-fill-color: #8F8580;
+}
+
+.form-select option {
+  background-color: #0b0b0b;
+  color: #FBF8F5;
+  -webkit-text-fill-color: #FBF8F5;
 }
 
 .form-textarea {
