@@ -3,7 +3,7 @@
  * Module 9: Order Management & Fulfillment Integration
  */
 
-const WHATSAPP_BUSINESS_NUMBER = '917063062326';
+const WHATSAPP_BUSINESS_NUMBER = '917477804133';
 
 document.addEventListener('DOMContentLoaded', () => {
   verifyCartNotEmpty();
